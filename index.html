@@ -499,7 +499,7 @@ code{font-family:monospace;font-size:9px;color:var(--g3);background:var(--bg4);p
               </button>
             </div>
           </div>
-          <div style="font-size:10px;color:var(--g3);margin-top:4px" id="sim-bracket-hint"></div>
+          <div style="font-size:10px;color:var(--g3);margin-top:4px">최소 집행 금액: 500만원 (VAT별도가)</div>
         </div>
         <button class="run-btn" id="sim-btn"><div class="spin" id="sim-sp"></div><span id="sim-bt">성과 예측하기</span></button>
         <div class="errmsg" id="sim-err"></div>
@@ -3097,7 +3097,7 @@ function simInitProductSelect(){
     if(n<0) n=0;
     if(budgetInput){
       budgetInput.value=_budgetFormat(n);
-      el('sim-bracket-hint').textContent=n>0?simBracketLabel(n):'';
+      var bh=el('sim-bracket-hint'); if(bh) bh.textContent=n>0?simBracketLabel(n):'';
     }
   }
   if(budgetInput){
@@ -3108,7 +3108,7 @@ function simInitProductSelect(){
       /* 커서 위치 보정 — 끝쪽 입력이면 그대로, 중간 편집은 단순 처리 */
       var newLen=this.value.length;
       try{ this.setSelectionRange(caretEnd+(newLen-oldLen), caretEnd+(newLen-oldLen)); }catch(e){}
-      el('sim-bracket-hint').textContent=n>0?simBracketLabel(n):'';
+      var bh=el('sim-bracket-hint'); if(bh) bh.textContent=n>0?simBracketLabel(n):'';
     });
     /* 키보드 위/아래 화살표로도 100만원 단위 조정 */
     budgetInput.addEventListener('keydown',function(e){
@@ -3132,8 +3132,8 @@ function runSimulator(){
     if(err){err.textContent='업종과 상품을 선택해주세요.';err.className='errmsg show';}
     return;
   }
-  if(!budget||budget<100000){
-    if(err){err.textContent='예산을 10만원 이상 입력해주세요.';err.className='errmsg show';}
+  if(!budget||budget<5000000){
+    if(err){err.textContent='최소 집행 금액은 500만원 입니다.';err.className='errmsg show';}
     return;
   }
   if(err) err.className='errmsg';
