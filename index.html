@@ -76,6 +76,8 @@ body{background:var(--bg);color:var(--g1);font-family:'DM Sans',system-ui,sans-s
 .b-am{background:rgba(251,191,36,.1);color:#FCD34D;border:1px solid rgba(251,191,36,.2)}
 .b-gr{background:rgba(34,197,94,.1);color:#4ADE80;border:1px solid rgba(34,197,94,.2)}
 .b-gy{background:var(--bg4);color:var(--g2);border:1px solid var(--bd2)}
+.kpi-h{font-size:13px;font-weight:700;color:var(--w);letter-spacing:-.2px;display:inline-flex;align-items:center;gap:7px;line-height:1.2}
+.kpi-h::before{content:'';width:3px;height:14px;background:var(--r);border-radius:2px;flex-shrink:0}
 .tag{display:inline-block;font-size:10px;padding:1px 6px;border-radius:4px;background:var(--bg4);border:1px solid var(--bd2);color:var(--g2);margin:2px}
 .tag.h{background:var(--r2);color:var(--r);border-color:rgba(229,57,53,.3)}
 /* PROD CARD */
@@ -241,6 +243,7 @@ code{font-family:monospace;font-size:9px;color:var(--g3);background:var(--bg4);p
 .modal-overlay.show{display:flex}
 @keyframes modalFadeIn{from{opacity:0}to{opacity:1}}
 .modal-box{background:var(--bg2);border:1px solid var(--bd2);border-radius:14px;width:100%;max-width:880px;max-height:calc(100vh - 80px);overflow:hidden;display:flex;flex-direction:column;animation:modalSlideUp .26s cubic-bezier(.4,0,.2,1);box-shadow:0 20px 60px rgba(0,0,0,.6)}
+.modal-box.small{max-width:520px}
 @keyframes modalSlideUp{from{opacity:0;transform:translateY(16px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
 .modal-head{display:flex;align-items:center;justify-content:space-between;padding:18px 22px;border-bottom:1px solid var(--bd);flex-shrink:0;background:linear-gradient(180deg,rgba(229,57,53,.04) 0%,transparent 100%)}
 .modal-head-l{display:flex;align-items:center;gap:10px}
@@ -273,25 +276,19 @@ code{font-family:monospace;font-size:9px;color:var(--g3);background:var(--bg4);p
 .cov-media{background:var(--bg4);border:1px solid var(--bd2);color:var(--g1);font-size:11px;padding:5px 10px;border-radius:14px;font-weight:500}
 .cov-disclaimer{font-size:11px;color:var(--g2);line-height:1.65;margin-bottom:14px;padding:10px 13px;background:rgba(229,57,53,.05);border:1px solid rgba(229,57,53,.18);border-radius:8px;border-left:3px solid var(--r)}
 
-/* PATENT NEWS LIST */
-.news-section-h{font-size:11px;font-weight:700;color:var(--w);letter-spacing:.04em;margin-bottom:10px;display:flex;align-items:center;gap:6px;padding:6px 0;border-bottom:1px solid rgba(229,57,53,.18)}
-.news-block{padding:11px 0;border-bottom:1px solid var(--bd);transition:background .15s}
-.news-block:last-child{border:none}
-.news-block:hover{background:rgba(229,57,53,.03)}
-.news-src{display:flex;align-items:center;gap:7px;font-size:11px;color:var(--g2);margin-bottom:6px;flex-wrap:wrap}
-.news-src-ic{width:18px;height:18px;border-radius:4px;background:rgba(96,165,250,.15);color:#60A5FA;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0}
-.news-src-ic.major{background:rgba(229,57,53,.18);color:var(--r);border:1px solid rgba(229,57,53,.3)}
-.news-src-name{font-weight:700;color:var(--g1);font-size:12px}
-.news-src-date{color:var(--g3);margin-left:auto;font-size:10px}
-.news-tier-badge{display:inline-block;font-size:9px;padding:2px 7px;border-radius:10px;font-weight:700;background:rgba(229,57,53,.12);color:var(--r);border:1px solid rgba(229,57,53,.28);letter-spacing:.04em}
-.news-title{font-size:13px;font-weight:600;color:#93C5FD;line-height:1.5;margin-bottom:0;display:block;text-decoration:none;cursor:pointer;transition:color .15s}
-.news-title:hover{color:#BFDBFE;text-decoration:underline}
-.news-desc{font-size:11px;color:var(--g2);line-height:1.65;margin-top:6px}
-.news-related{display:flex;flex-direction:column;gap:4px;margin-top:8px;padding-top:8px;border-top:1px dashed var(--bd)}
-.news-related-item{font-size:11px;color:var(--g2);display:flex;align-items:center;gap:8px;padding:3px 0}
-.news-related-t{color:#60A5FA;font-weight:600;flex:1;cursor:pointer}
-.news-related-t:hover{color:#93C5FD;text-decoration:underline}
-.news-related-src{color:var(--g3);font-size:10px;flex-shrink:0}
+/* PATENT NEWS — 네이버뉴스 스타일 카드 */
+.news-card{display:block;padding:14px 14px 16px;margin-bottom:10px;border-bottom:1px solid var(--bd);text-decoration:none;color:inherit;transition:background .15s;cursor:pointer;border-radius:6px}
+.news-card:last-child{border-bottom:none;margin-bottom:0}
+.news-card:hover{background:rgba(255,255,255,.02)}
+.news-card:hover .news-card-title{color:#BFDBFE;text-decoration:underline}
+.news-card-meta{display:flex;align-items:center;gap:6px;font-size:11px;margin-bottom:9px;flex-wrap:wrap}
+.news-card-logo{width:20px;height:20px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;border:1px solid;flex-shrink:0;letter-spacing:-.5px}
+.news-card-src{font-weight:700;color:var(--w);font-size:12px;letter-spacing:-.2px}
+.news-card-dot{color:var(--g3);font-size:10px;margin:0 1px}
+.news-card-date{color:var(--g2);font-size:11px}
+.news-card-tag{color:var(--g2);font-size:11px}
+.news-card-title{font-size:14.5px;font-weight:700;color:#93C5FD;line-height:1.45;margin-bottom:8px;letter-spacing:-.3px;transition:color .15s}
+.news-card-desc{font-size:12px;color:var(--g1);line-height:1.7;letter-spacing:-.1px;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
 
 /* CLIENT MODAL — CATEGORIZED */
 .cli-cats{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
@@ -318,17 +315,27 @@ code{font-family:monospace;font-size:9px;color:var(--g3);background:var(--bg4);p
 .dmp-row-l{font-size:9.5px;color:var(--g3);font-weight:700;letter-spacing:.05em;text-transform:uppercase}
 .dmp-row-v{font-size:11.5px;color:var(--g1);line-height:1.6}
 
-/* MAJOR CLIENTS — OVERVIEW GRID (9 업종 카드, 비클릭/디스플레이용) */
+/* MAJOR CLIENTS — OVERVIEW GRID (9 업종 카드, 카드 클릭 → 카테고리별 작은 팝업) */
 .mc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-.mc-tile{background:var(--bg4);border:1px solid var(--bd);border-radius:10px;padding:13px;display:flex;flex-direction:column;position:relative;overflow:hidden;transition:border-color .2s,background .2s}
-.mc-tile:hover{border-color:rgba(229,57,53,.22);background:rgba(229,57,53,.03)}
+.mc-tile{background:var(--bg4);border:1px solid var(--bd);border-radius:10px;padding:13px;display:flex;flex-direction:column;position:relative;overflow:hidden;cursor:pointer;transition:all .22s cubic-bezier(.4,0,.2,1)}
+.mc-tile::after{content:'';position:absolute;top:11px;right:11px;width:13px;height:13px;opacity:0;transform:translateX(-3px);transition:all .2s;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10' fill='none'%3E%3Cpath d='M3 1l4 4-4 4' stroke='%23E53935' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:center}
+.mc-tile:hover,.mc-tile:focus-visible{border-color:rgba(229,57,53,.35);transform:translateY(-2px);box-shadow:0 6px 18px rgba(229,57,53,.13);background:rgba(229,57,53,.04);outline:none}
+.mc-tile:hover::after,.mc-tile:focus-visible::after{opacity:1;transform:translateX(0)}
 .mc-tile-h{display:flex;align-items:center;gap:8px;margin-bottom:9px;padding-bottom:7px;border-bottom:1px solid var(--bd)}
 .mc-tile-ic{font-size:16px;line-height:1;flex-shrink:0}
 .mc-tile-n{font-size:12px;font-weight:700;color:var(--w);letter-spacing:-.1px}
 .mc-tile-clients{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:9px;flex:1;align-content:flex-start}
 .mc-tile-chip{padding:3px 8px;background:var(--bg2);border:1px solid var(--bd2);border-radius:11px;font-size:10.5px;color:var(--g1);font-weight:500;line-height:1.3;letter-spacing:-.1px}
 .mc-tile-chip.more{background:rgba(229,57,53,.08);border-color:rgba(229,57,53,.22);color:var(--r);font-weight:700}
+.mc-tile:hover .mc-tile-chip,.mc-tile:focus-visible .mc-tile-chip{border-color:var(--bd3)}
 .mc-tile-case{font-size:10px;color:var(--g2);line-height:1.55;padding-top:7px;border-top:1px dashed var(--bd);font-weight:500;letter-spacing:-.15px}
+.mc-tile:hover .mc-tile-case,.mc-tile:focus-visible .mc-tile-case{color:var(--g1)}
+
+/* Category-specific small popup body */
+.cat-cli-grid{display:flex;flex-wrap:wrap;gap:6px}
+.cat-cli-chip{padding:7px 13px;background:var(--bg4);border:1px solid var(--bd2);border-radius:16px;font-size:12px;color:var(--w);font-weight:500;letter-spacing:-.1px;transition:all .15s}
+.cat-cli-chip:hover{border-color:rgba(229,57,53,.35);background:rgba(229,57,53,.05)}
+.cat-cli-chip.more{background:rgba(229,57,53,.1);border-color:rgba(229,57,53,.25);color:var(--r);font-weight:700;letter-spacing:.1em}
 
 /* Old mc-logorow (kept for backward compat — not used) */
 .mc-logorow{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px;padding:12px;background:var(--bg4);border-radius:8px;border:1px solid var(--bd)}
@@ -1016,26 +1023,44 @@ var COVERAGE_SHEETS = [
 ============================================================ */
 var PATENT_NEWS = {
   intro:'KT넥스알·나스미디어가 공동 개발한 AI 기반 광고 전환율 향상 기술은 2024년 6월 공식 특허로 출원되었으며, 주요 일간지·경제지·IT 매체에서 일제히 보도되었습니다. 특허명: <strong style="color:var(--w)">Customer Journey 기반의 오디언스 행동 예측시스템 및 운영방법</strong> — 자체 딥러닝 알고리즘으로 잠재고객의 전환 행동을 예측해 같은 비용 대비 <strong style="color:var(--r)">구매 전환율을 2배 이상</strong> 끌어올리는 핵심 기술입니다.',
-  /* tier: 1 = 주요 일간지/경제지, 2 = IT/전문 매체 */
+  /* 메이저 매체 위주 — 각 기사 요약 포함 (네이버뉴스 스타일) */
   articles:[
-    {tier:1, src:'아주경제',         date:'2024.06.24', title:'KT넥스알·나스미디어, AI 특허 기술로 광고 전환율 2배 높여',                       url:'https://www.ajunews.com/view/20240624094434046'},
-    {tier:1, src:'이코노믹리뷰',     date:'2024.06.24', title:'KT넥스알, 나스미디어와 광고 전환율 높였다',                                       url:'https://www.econovill.com/news/articleView.html?idxno=658493'},
-    {tier:1, src:'ZDNet Korea',     date:'2024.06.24', title:'KT넥스알-나스미디어, 잠재고객 행동 예측으로 광고전환율 2배 높여',                  url:'https://zdnet.co.kr/view/?no=20240624'},
-    {tier:1, src:'파이낸스투데이',   date:'2024.06.24', title:'KT넥스알-나스미디어, AI 특허 출원…"구매전환율 2배로"',                            url:'http://www.fntoday.co.kr/news/articleView.html?idxno=324037'},
-    {tier:1, src:'테크M',            date:'2024.06.24', title:'KT넥스알·나스미디어, AI 특허 출원…고객 행동 예측해 구매전환율 높인다',           url:'https://www.techm.kr/news/articleView.html?idxno=126390'},
-    {tier:1, src:'뉴스퀘스트',       date:'2024.06.24', title:'KT넥스알-나스미디어, 그룹사 뭉쳐 광고 전환율 높이는 AI 기술 특허 공동 출원',     url:'https://www.newsquest.co.kr/news/articleView.html?idxno=226007'},
-    {tier:2, src:'AI타임스',         date:'2024.06.24', title:'KT넥스알-나스미디어, 광고 전환율 높이는 AI 기술 특허 공동 출원',                 url:'https://www.aitimes.com/news/articleView.html?idxno=160904'},
-    {tier:2, src:'AI타임스 (KR)',    date:'2024.06.24', title:'KT넥스알-나스미디어, AI 특허 기술로 광고 전환율 2배 높였다',                     url:'https://www.aitimes.kr/news/articleView.html?idxno=31478'},
-    {tier:2, src:'IT비즈뉴스',       date:'2024.06.24', title:'KT넥스알·나스미디어, 광고 전환율 높이는 AI기술 특허 출원',                       url:'http://www.itbiznews.com/news/articleView.html?idxno=137874'},
-    {tier:2, src:'청년일보',         date:'2024.06.24', title:'"광고 전환율 2배 증가"…KT넥스알-나스미디어, AI 기술 특허 공동 출원',           url:'https://www.youthdaily.co.kr/news/article.html?no=157087'},
-    {tier:2, src:'STV뉴스',          date:'2024.06.25', title:"KT넥스알-나스미디어, AI를 기반으로 '광고전환율 높이는 기술 특허' 공동 출원",     url:'https://www.stvnews.kr/news/articleView.html?idxno=11556'},
-    {tier:2, src:'인공지능신문',     date:'2024.06.24', title:'KT넥스알-나스미디어, AI 특허 기술로 광고 전환율 2배 높였다',                     url:'http://www.fntoday.co.kr/news/articleView.html?idxno=324037'},
-    {tier:2, src:'녹색경제신문',     date:'2024.06.25', title:'KT 계열사 나스미디어·KT넥스알, AI로 디지털 고객 구매여정 분석',                 url:'http://www.fntoday.co.kr/news/articleView.html?idxno=324037'},
-    {tier:2, src:'비즈트리뷴',       date:'2024.06.24', title:'KT넥스알-나스미디어, AI 특허 기술로 광고 전환율 2배 높였다',                     url:'http://www.fntoday.co.kr/news/articleView.html?idxno=324037'},
-    {tier:2, src:'워크투데이',       date:'2024.06.24', title:'KT넥스알-나스미디어, AI 특허 기술로 광고 전환율 2배 높였다',                     url:'http://www.fntoday.co.kr/news/articleView.html?idxno=324037'},
-    {tier:2, src:'폴리뉴스',         date:'2024.06.24', title:'KT넥스알-나스미디어, AI 특허 기술로 광고 전환율 2배 높였다',                     url:'http://www.fntoday.co.kr/news/articleView.html?idxno=324037'},
-    {tier:2, src:'오늘경제',         date:'2024.06.24', title:'KT넥스알-나스미디어, AI 특허 기술로 광고 전환율 2배 높였다',                     url:'http://www.fntoday.co.kr/news/articleView.html?idxno=324037'},
-    {tier:2, src:'연합뉴스',         date:'2024.06.24', title:'KT넥스알·나스미디어, AI 기반 기술 특허 공동 출원',                                 url:'http://www.fntoday.co.kr/news/articleView.html?idxno=324037'}
+    {
+      src:'아주경제', srcColor:'#E11D48', date:'2024.06.24', tag:'네이버뉴스',
+      title:'KT넥스알·나스미디어, AI 특허 기술로 광고 전환율 2배 높여',
+      desc:'KT그룹 빅데이터 전문 자회사 KT넥스알이 디지털 마케팅 기업 나스미디어와 손잡고 잠재고객 행동을 예측하는 AI 기술 특허를 공동 출원했다. 자체 딥러닝 알고리즘으로 광고 노출 후 잠재고객의 전환 행동을 예측, 구매 가능성이 높은 타깃에 우선 노출하는 방식이다. 동일 비용 기준 시뮬레이션에서 전환율이 기존 핵심 광고그룹 대비 2배 이상 향상된 것으로 확인됐다.',
+      url:'https://www.ajunews.com/view/20240624094434046'
+    },
+    {
+      src:'ZDNet Korea', srcColor:'#0EA5E9', date:'2024.06.24', tag:'네이버뉴스',
+      title:'KT넥스알-나스미디어, 잠재고객 행동 예측으로 광고전환율 2배 높여',
+      desc:'KT넥스알과 나스미디어가 인공지능(AI)을 기반으로 잠재고객의 행동을 예측해 광고 전환율을 높이는 기술의 특허를 공동 출원했다. 특허 기술을 탑재한 나스미디어 DMP 시뮬레이션 결과, 같은 비용에서 클릭률은 안정적인 수준을 유지하면서도 전환율은 기존 핵심 광고그룹 대비 2배 이상 증가했다. KT넥스알 AI 분석 역량과 나스미디어 애드테크 기술력이 결집된 KT그룹사 시너지 사례로 평가된다.',
+      url:'https://zdnet.co.kr/view/?no=20240624'
+    },
+    {
+      src:'이코노믹리뷰', srcColor:'#7C3AED', date:'2024.06.24', tag:'네이버뉴스',
+      title:'KT넥스알, 나스미디어와 광고 전환율 높였다',
+      desc:'나스미디어 DMP를 활용한 시뮬레이션에서 동일 광고비용으로 클릭률은 유지하면서도 전환율은 기존 핵심 광고그룹 대비 2배 이상 증가한 것으로 나타났다. 디지털 마케팅 기업들은 본 플랫폼을 바탕으로 구매 전환율 향상, 초개인화 마케팅 강화, 효율적 자원 배분, 고객 인사이트 등 광고성과 및 매출 성장을 극대화할 수 있을 것으로 기대된다.',
+      url:'https://www.econovill.com/news/articleView.html?idxno=658493'
+    },
+    {
+      src:'테크M', srcColor:'#F59E0B', date:'2024.06.24', tag:'네이버뉴스',
+      title:'KT넥스알·나스미디어, AI 특허 출원…고객 행동 예측해 구매전환율 높인다',
+      desc:'KT넥스알은 잠재고객의 행동 패턴을 분석하던 중 구매 전환 과정에서 고객이 취하는 특정 행동을 발견해 특허 아이디어로 발전시켰다. 제품 인지부터 구매까지 발생하는 빅데이터로 예측 정확도를 높였다. 이번 특허는 KT넥스알 AI 분석 역량과 나스미디어 애드테크 기술력이 결집된 그룹사 시너지 사례로 손꼽힌다.',
+      url:'https://www.techm.kr/news/articleView.html?idxno=126390'
+    },
+    {
+      src:'뉴스퀘스트', srcColor:'#10B981', date:'2024.06.24', tag:'네이버뉴스',
+      title:'KT넥스알-나스미디어, 그룹사 뭉쳐 광고 전환율 높이는 AI 기술 특허 공동 출원',
+      desc:'KT그룹 빅데이터 전문기업 KT넥스알과 디지털 마케팅 기업 나스미디어가 그룹사 시너지를 백분 발휘하고 있다. 양사는 2022년부터 DMP·AI 빅데이터 기반 마케팅 솔루션을 강화해 왔다. 2023년에는 핵심 타깃 유사그룹을 자동 탐색·도출하는 AI 분석모델을 개발하며 오디언스 타깃팅을 고도화한 데 이어, 이번 특허로 전환 예측 모델까지 확보했다.',
+      url:'https://www.newsquest.co.kr/news/articleView.html?idxno=226007'
+    },
+    {
+      src:'파이낸스투데이', srcColor:'#DC2626', date:'2024.06.24', tag:'네이버뉴스',
+      title:'KT넥스알-나스미디어, AI 특허 출원…"구매전환율 2배로"',
+      desc:'잠재고객 행동을 예측해 광고 전환율을 높이는 AI 기술 특허, KT넥스알·나스미디어 공동 출원. 특허명은 \'Customer Journey 기반의 오디언스 행동 예측시스템 및 운영방법\'이다. 구매 전환율 향상, 초개인화 마케팅 강화, 효율적 자원 배분, 고객 인사이트 확보 등 광고성과 및 매출 성장 극대화에 기여할 것으로 기대된다.',
+      url:'http://www.fntoday.co.kr/news/articleView.html?idxno=324037'
+    }
   ]
 };
 
@@ -2699,17 +2724,31 @@ function renderBrochure(){
   var kng = el('kpi-nav-grid');
   if(kng){
     var kpiNav=[
-      {k:'Branding',cl:'b-bl',prods:['Brand lift','Reach Max','Brand lift/Bumper','CTV (IPTV)','Native video'],tip:'브랜드 인지도·호감도를 정량화하려면 Brand lift. 최대 UV 도달은 Reach Max.'},
-      {k:'UV확보',cl:'b-bl',prods:['Reach Max','Native video','Kakao x nap dsp','Brand lift'],tip:'Reach Max + Native video 조합으로 중복 제거 UV 극대화.'},
-      {k:'CPI',cl:'b-r',prods:['Smart tracking','Script Banner (Playable Ad)'],tip:'앱 설치 목표. MMP 연동 필수. Script Banner Playable Ad가 CPI 최저 사례 다수.'},
-      {k:'CPA',cl:'b-r',prods:['Smart tracking','Commerce retargeting'],tip:'전환 스크립트 삽입 필수. 구매·가입·설치 등 목표 이벤트 설정 후 자동 최적화.'},
-      {k:'ROAS',cl:'b-am',prods:['Commerce retargeting','Dynamic Banner','Smart tracking'],tip:'ROAS 1,000%+ 사례. 구매 라이프사이클 기반 다이나믹 리타겟팅이 핵심.'},
-      {k:'Re-Engagement',cl:'b-gr',prods:['Commerce retargeting','Dynamic Banner'],tip:'기존 유저 재방문·재구매 유도. MMP All-Postback 연동 후 인앱이벤트 조건 타겟.'}
+      {k:'Branding',     prods:['Brand lift','Reach Max','Brand lift / Bumper','CTV (IPTV, Fast channel)','Native video','Kakao x nap dsp'],
+       tip:'브랜드 인지도·호감도를 정량화하려면 Brand lift. 최대 UV 도달은 Reach Max + Native video 조합.'},
+      {k:'UV확보',       prods:['Reach Max','Native video','Kakao x nap dsp','Brand lift'],
+       tip:'Reach Max + Native video 조합으로 중복 제거 UV 극대화.'},
+      {k:'CPI',          prods:['Smart tracking'],
+       tip:'앱 설치 목표. MMP 연동 필수. Smart tracking + DMP 정밀 타겟팅으로 CPI 최적화.'},
+      {k:'CPA',          prods:['Smart tracking','Commerce retargeting'],
+       tip:'전환 스크립트 삽입 필수. 구매·가입·설치 등 목표 이벤트 설정 후 자동 최적화.'},
+      {k:'ROAS',         prods:['Commerce retargeting','Live commerce','Smart tracking'],
+       tip:'ROAS 1,000%+ 사례. 구매 라이프사이클 기반 다이나믹 리타겟팅이 핵심.'},
+      {k:'Re-Engagement',prods:['Commerce retargeting'],
+       tip:'기존 유저 재방문·재구매 유도. MMP All-Postback 연동 후 인앱이벤트 조건 타겟.'}
     ];
+    /* 상품명 → 카테고리 매핑 (광고 상품 전체 컬러와 일치시키기 위함) */
+    var prodCatByName = {};
+    PRODS.forEach(function(p){ prodCatByName[p.n] = p.c; });
     kng.innerHTML = '<div class="grid2" style="margin-top:10px">'+kpiNav.map(function(kn){
+      var prodChips = kn.prods.map(function(pname){
+        var cat = prodCatByName[pname];
+        var cls = cat ? CATCLS[cat] : 'b-gy';
+        return '<span class="badge '+cls+'" style="margin:2px 0">'+pname+'</span>';
+      }).join(' ');
       return '<div style="background:var(--bg4);border-radius:8px;padding:13px;border:1px solid var(--bd)">'
-        +'<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px"><span class="badge '+kn.cl+'">'+kn.k+'</span></div>'
-        +'<div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:8px">'+kn.prods.map(function(p){return '<span class="tag h">'+p+'</span>';}).join('')+'</div>'
+        +'<div class="kpi-h" style="margin-bottom:9px">'+kn.k+'</div>'
+        +'<div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:8px">'+prodChips+'</div>'
         +'<div style="font-size:11px;color:var(--g3);line-height:1.55">'+kn.tip+'</div></div>';
     }).join('')+'</div>';
   }
@@ -2752,10 +2791,10 @@ function renderBrochure(){
   var mc = el('major-clients');
   if(mc){
     var cats = CLIENTS_DATA.cats;
-    var mh = '<div style="font-size:11.5px;color:var(--g2);line-height:1.7;margin-top:6px;margin-bottom:14px">9개 업종 · 5,000+ 광고주 · 다양한 KPI 캠페인 운영 Know-How. 아래 <strong style="color:var(--r)">전체 광고주 자세히 보기</strong> 버튼을 눌러 전체 리스트를 확인하세요.</div>';
+    var mh = '<div style="font-size:11.5px;color:var(--g2);line-height:1.7;margin-top:6px;margin-bottom:14px">9개 업종 · 5,000+ 광고주 · 다양한 KPI 캠페인 운영 Know-How. 카드를 클릭하면 해당 업종의 전체 광고주를, 아래 <strong style="color:var(--r)">전체 광고주 자세히 보기</strong> 버튼을 누르면 9개 업종 전체 리스트를 확인할 수 있습니다.</div>';
     mh += '<div class="mc-grid">';
-    cats.forEach(function(c){
-      mh += '<div class="mc-tile">'
+    cats.forEach(function(c, idx){
+      mh += '<div class="mc-tile" data-cat-idx="'+idx+'" tabindex="0" role="button" aria-label="'+c.n+' 업종 광고주 보기">'
         +'<div class="mc-tile-h"><span class="mc-tile-ic">'+(c.ic||'')+'</span><span class="mc-tile-n">'+c.n+'</span></div>'
         +'<div class="mc-tile-clients">'
         + c.clients.slice(0,4).map(function(cl){return '<span class="mc-tile-chip">'+cl+'</span>';}).join('')
@@ -3298,6 +3337,8 @@ function escHtml(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt
 
 function openModal(opts){
   var m = el('modal');
+  var box = m.querySelector('.modal-box');
+  if(box) box.classList.toggle('small', opts.size === 'small');
   el('modal-title').textContent = opts.title || '';
   el('modal-sub').textContent   = opts.sub   || '';
   el('modal-icon').innerHTML    = opts.icon  || '';
@@ -3387,31 +3428,23 @@ function showProductModal(id){
 /* ── PATENT 모달 (2배+ 클릭) ── */
 function buildPatentBody(){
   var h = '<div style="font-size:12px;color:var(--g2);line-height:1.75;margin-bottom:18px;padding:14px 16px;background:var(--bg4);border-radius:8px;border-left:3px solid var(--r)">'+PATENT_NEWS.intro+'</div>';
-  /* 메이저 매체 (tier 1) 우선 배치 */
-  var t1 = PATENT_NEWS.articles.filter(function(a){return a.tier===1;});
-  var t2 = PATENT_NEWS.articles.filter(function(a){return a.tier===2;});
   function iconLetter(src){ return (src||'N').replace(/[^\uAC00-\uD7A3A-Za-z]/g,'').charAt(0) || 'N'; }
-  function articleHtml(a, isMajor){
-    var srcCls = isMajor ? 'news-src-ic major' : 'news-src-ic';
-    return '<div class="news-block">'
-      +'<div class="news-src">'
-        +'<span class="'+srcCls+'">'+escHtml(iconLetter(a.src))+'</span>'
-        +'<span class="news-src-name">'+escHtml(a.src)+'</span>'
-        +(isMajor?'<span class="news-tier-badge">주요 매체</span>':'')
-        +'<span class="news-src-date">'+escHtml(a.date)+'</span>'
+  /* 네이버뉴스 스타일 카드 — 매체 메타 + 타이틀 + 요약 */
+  PATENT_NEWS.articles.forEach(function(a){
+    var color = a.srcColor || '#E53935';
+    h += '<a class="news-card" href="'+escHtml(a.url)+'" target="_blank" rel="noopener">'
+      +'<div class="news-card-meta">'
+        +'<span class="news-card-logo" style="background:'+color+'1f;color:'+color+';border-color:'+color+'40">'+escHtml(iconLetter(a.src))+'</span>'
+        +'<span class="news-card-src">'+escHtml(a.src)+'</span>'
+        +'<span class="news-card-dot">·</span>'
+        +'<span class="news-card-date">'+escHtml(a.date)+'</span>'
+        +(a.tag?'<span class="news-card-dot">·</span><span class="news-card-tag">'+escHtml(a.tag)+'</span>':'')
       +'</div>'
-      +'<a class="news-title" href="'+escHtml(a.url)+'" target="_blank" rel="noopener">'+escHtml(a.title)+'</a>'
-    +'</div>';
-  }
-  if(t1.length){
-    h += '<div class="news-section-h">📰 주요 일간지·경제지·IT 매체</div>';
-    t1.forEach(function(a){ h += articleHtml(a, true); });
-  }
-  if(t2.length){
-    h += '<div class="news-section-h" style="margin-top:18px">📑 IT·전문 매체</div>';
-    t2.forEach(function(a){ h += articleHtml(a, false); });
-  }
-  h += '<div style="margin-top:14px;padding:10px 14px;background:rgba(229,57,53,.05);border:1px solid rgba(229,57,53,.18);border-radius:8px;font-size:11px;color:var(--g2);text-align:center">총 <strong style="color:var(--r)">'+PATENT_NEWS.articles.length+'개+</strong> 매체에서 보도 · 관련뉴스 49건+ 전체보기는 각 기사 클릭</div>';
+      +'<div class="news-card-title">'+escHtml(a.title)+'</div>'
+      +'<div class="news-card-desc">'+escHtml(a.desc||'')+'</div>'
+    +'</a>';
+  });
+  h += '<div style="margin-top:14px;padding:10px 14px;background:rgba(229,57,53,.05);border:1px solid rgba(229,57,53,.18);border-radius:8px;font-size:11px;color:var(--g2);text-align:center">위 주요 매체 외에도 다수의 IT·전문 매체에서 보도 · 카드를 클릭하면 원문 기사를 확인할 수 있습니다</div>';
   return h;
 }
 function showPatentModal(){
@@ -3457,6 +3490,36 @@ function showClientsModal(){
     sub: 'Client — 9개 업종 · 5,000+ 캠페인 집행 레퍼런스',
     icon: '<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="6" cy="5" r="2.4" stroke="currentColor" stroke-width="1.4"/><path d="M2 13c0-2.5 1.8-4 4-4s4 1.5 4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><circle cx="11.5" cy="6" r="1.7" stroke="currentColor" stroke-width="1.3"/><path d="M9.5 13c0-1.6 1-2.8 2-3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>',
     body: buildClientsBody()
+  });
+}
+
+/* ── 카테고리별 광고주 작은 팝업 (mc-tile 클릭) ── */
+function buildCategoryClientsBody(idx){
+  var c = CLIENTS_DATA.cats[idx];
+  if(!c) return '';
+  var h = '';
+  if(c.caseHint){
+    h += '<div class="cli-case" style="margin:0 0 14px 0;padding:11px 14px;background:rgba(229,57,53,.05);border:1px solid rgba(229,57,53,.18);border-radius:8px;font-size:12px;line-height:1.65;color:var(--r);font-weight:600;border-top:none">💡 '+escHtml(c.caseHint)+'</div>';
+  }
+  h += '<div style="font-size:10.5px;font-weight:700;color:var(--g3);letter-spacing:.05em;margin-bottom:9px;text-transform:uppercase">대표 광고주 ('+c.clients.length+'+)</div>';
+  h += '<div class="cat-cli-grid">';
+  c.clients.forEach(function(cl){
+    h += '<span class="cat-cli-chip">'+escHtml(cl)+'</span>';
+  });
+  h += '<span class="cat-cli-chip more">···</span>';
+  h += '</div>';
+  h += '<div style="margin-top:14px;padding:10px 12px;background:var(--bg4);border:1px solid var(--bd);border-radius:8px;font-size:11px;color:var(--g2);line-height:1.65;text-align:center">위 광고주를 포함, '+escHtml(c.n)+' 업종 다수 캠페인 집행 레퍼런스 보유</div>';
+  return h;
+}
+function showCategoryClientsModal(idx){
+  var c = CLIENTS_DATA.cats[idx];
+  if(!c) return;
+  openModal({
+    size: 'small',
+    title: c.n,
+    sub: (c.ic||'')+' '+c.n+' 업종 · 대표 광고주 '+c.clients.length+'+개',
+    icon: '<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.4"/><circle cx="8" cy="8" r="2.5" fill="currentColor"/></svg>',
+    body: buildCategoryClientsBody(idx)
   });
 }
 
@@ -3589,6 +3652,9 @@ function init(){
     /* product card click → 상세 모달 */
     var prodEl = t.closest('[data-prod]');
     if(prodEl){ showProductModal(prodEl.dataset.prod); return; }
+    /* major-client tile click → 카테고리별 작은 팝업 */
+    var catEl = t.closest('[data-cat-idx]');
+    if(catEl){ showCategoryClientsModal(parseInt(catEl.dataset.catIdx,10)); return; }
     /* tab */
     var tb=t.closest('.tab[data-tab]')||t.closest('[data-tab]');
     if(tb&&!t.closest('#navtabs')){switchTab(tb.dataset.tab);return;}
@@ -3611,7 +3677,9 @@ function init(){
     /* Enter/Space on focused prod card → open modal */
     if((e.key === 'Enter' || e.key === ' ') && document.activeElement){
       var pc = document.activeElement.closest && document.activeElement.closest('[data-prod]');
-      if(pc){ e.preventDefault(); showProductModal(pc.dataset.prod); }
+      if(pc){ e.preventDefault(); showProductModal(pc.dataset.prod); return; }
+      var cc = document.activeElement.closest && document.activeElement.closest('[data-cat-idx]');
+      if(cc){ e.preventDefault(); showCategoryClientsModal(parseInt(cc.dataset.catIdx,10)); }
     }
   });
 
