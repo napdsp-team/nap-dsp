@@ -16,7 +16,7 @@ body{background:var(--bg);color:var(--g1);font-family:'DM Sans',system-ui,sans-s
 /* TOPBAR */
 #topbar{background:var(--bg2);border-bottom:1px solid var(--bd);padding:0 20px;display:flex;align-items:center;gap:12px;height:50px;flex-shrink:0;flex-wrap:wrap}
 .logo{display:flex;align-items:center;gap:8px;flex-shrink:0}
-.logo-mark{width:30px;height:30px;background:var(--r);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:900;color:#fff}
+.logo-mark{width:30px;height:30px;background:var(--r);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:900;color:#fff;line-height:1;text-align:center;font-family:'DM Sans',system-ui,sans-serif}
 .logo-name{font-size:13px;font-weight:700;color:var(--w)}
 .logo-sub{font-size:9px;color:var(--g3);letter-spacing:.04em}
 .reset-btn{padding:7px 13px;background:transparent;border:1px solid var(--bd2);border-radius:7px;font-size:12px;cursor:pointer;font-family:inherit;color:var(--g2);flex-shrink:0;display:none}
@@ -79,8 +79,23 @@ body{background:var(--bg);color:var(--g1);font-family:'DM Sans',system-ui,sans-s
 .tag{display:inline-block;font-size:10px;padding:1px 6px;border-radius:4px;background:var(--bg4);border:1px solid var(--bd2);color:var(--g2);margin:2px}
 .tag.h{background:var(--r2);color:var(--r);border-color:rgba(229,57,53,.3)}
 /* PROD CARD */
-.prod-card{background:var(--bg4);border-radius:8px;padding:13px;border:1px solid var(--bd)}
+.prod-card{background:var(--bg4);border-radius:8px;padding:13px;border:1px solid var(--bd);position:relative;transition:all .2s cubic-bezier(.4,0,.2,1)}
 .prod-card.top{border-color:rgba(229,57,53,.3);background:rgba(229,57,53,.04)}
+.prod-card.clickable{cursor:pointer}
+.prod-card.clickable:hover{border-color:rgba(229,57,53,.4);background:rgba(229,57,53,.06);transform:translateY(-2px);box-shadow:0 6px 18px rgba(229,57,53,.13)}
+.prod-card.clickable:focus-visible{outline:2px solid var(--r);outline-offset:2px}
+.prod-arrow{display:inline-block;margin-left:7px;color:var(--r);opacity:0;transform:translateX(-4px);transition:all .2s;font-weight:700;font-size:12px}
+.prod-card.clickable:hover .prod-arrow,.prod-card.clickable:focus-visible .prod-arrow{opacity:1;transform:translateX(0)}
+
+/* PRODUCT DETAIL MODAL */
+.pd-table{width:100%;border-collapse:collapse;border-radius:8px;overflow:hidden;border:1px solid var(--bd)}
+.pd-table tr{border-bottom:1px solid var(--bd)}
+.pd-table tr:last-child{border-bottom:none}
+.pd-table th{text-align:left;padding:11px 14px;font-size:11.5px;font-weight:700;color:var(--g2);background:var(--bg2);width:120px;vertical-align:top;letter-spacing:-.1px;border-right:1px solid var(--bd);white-space:nowrap}
+.pd-table td{padding:11px 14px;font-size:12px;color:var(--w);line-height:1.7;vertical-align:top;letter-spacing:-.1px}
+.pd-table td b{color:var(--r);font-weight:700;letter-spacing:-.1px}
+.pd-note{margin-top:14px;padding:11px 14px;background:rgba(229,57,53,.05);border:1px solid rgba(229,57,53,.18);border-radius:8px;font-size:11px;color:var(--g1);line-height:1.65;display:flex;align-items:flex-start;gap:8px}
+.pd-note::before{content:'⚠';flex-shrink:0;color:var(--r);font-weight:700}
 /* CASE CARD */
 .cc{background:var(--bg2);border:1px solid var(--bd);border-radius:8px;overflow:hidden}
 .cc.top{border-color:rgba(229,57,53,.3)}
@@ -108,7 +123,6 @@ body{background:var(--bg);color:var(--g1);font-family:'DM Sans',system-ui,sans-s
 .hero-h span{color:var(--r)}
 .hero-sub{font-size:13px;color:var(--g2);line-height:1.8;max-width:540px;margin-bottom:20px}
 .hero-kv{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:20px;padding-top:20px;border-top:1px solid var(--bd)}
-.kv{text-align:center}
 .kv-val{font-size:22px;font-weight:700;color:var(--w);letter-spacing:-1px}
 .kv-lbl{font-size:10px;color:var(--g3);margin-top:3px}
 .btns{display:flex;gap:8px;flex-wrap:wrap}
@@ -209,7 +223,128 @@ code{font-family:monospace;font-size:9px;color:var(--g3);background:var(--bg4);p
 .onesheet-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
 .op-row{display:flex;gap:10px;align-items:flex-start;margin-bottom:8px}
 .op-num{width:22px;height:22px;min-width:22px;background:var(--r2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--r)}
-@media(max-width:700px){.hero-kv,.stat-row,.grid4,.grid2x,.onesheet-grid,.builder-layout{grid-template-columns:1fr 1fr}.why-grid{grid-template-columns:1fr}}
+
+/* INTERACTIVE KV CARDS */
+.kv{text-align:center;padding:12px 8px;border-radius:10px;border:1px solid transparent;transition:all .22s cubic-bezier(.4,0,.2,1);position:relative}
+.kv.clickable{cursor:pointer}
+.kv.clickable::after{content:'';position:absolute;top:6px;right:6px;width:14px;height:14px;border-radius:50%;background:rgba(229,57,53,.18);opacity:0;transition:opacity .22s;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10' fill='none'%3E%3Cpath d='M3 1l4 4-4 4' stroke='%23E53935' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:center}
+.kv.clickable:hover{transform:translateY(-3px);background:rgba(229,57,53,.07);border-color:rgba(229,57,53,.28);box-shadow:0 6px 18px rgba(229,57,53,.15)}
+.kv.clickable:hover::after{opacity:1}
+.kv.clickable:hover .kv-val{color:var(--r) !important}
+.kv.clickable:active{transform:translateY(-1px)}
+.kv-val{transition:color .22s}
+.kv-hint{font-size:9px;color:var(--g3);margin-top:5px;opacity:0;transition:opacity .22s;letter-spacing:.04em;font-weight:600;text-transform:uppercase}
+.kv.clickable:hover .kv-hint{opacity:1;color:var(--r)}
+
+/* MODAL / POPUP */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.78);backdrop-filter:blur(4px);display:none;align-items:flex-start;justify-content:center;z-index:9000;padding:40px 20px;overflow-y:auto;animation:modalFadeIn .2s ease-out}
+.modal-overlay.show{display:flex}
+@keyframes modalFadeIn{from{opacity:0}to{opacity:1}}
+.modal-box{background:var(--bg2);border:1px solid var(--bd2);border-radius:14px;width:100%;max-width:880px;max-height:calc(100vh - 80px);overflow:hidden;display:flex;flex-direction:column;animation:modalSlideUp .26s cubic-bezier(.4,0,.2,1);box-shadow:0 20px 60px rgba(0,0,0,.6)}
+@keyframes modalSlideUp{from{opacity:0;transform:translateY(16px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
+.modal-head{display:flex;align-items:center;justify-content:space-between;padding:18px 22px;border-bottom:1px solid var(--bd);flex-shrink:0;background:linear-gradient(180deg,rgba(229,57,53,.04) 0%,transparent 100%)}
+.modal-head-l{display:flex;align-items:center;gap:10px}
+.modal-icon{width:32px;height:32px;border-radius:8px;background:rgba(229,57,53,.12);border:1px solid rgba(229,57,53,.25);display:flex;align-items:center;justify-content:center;color:var(--r);flex-shrink:0}
+.modal-title{font-size:15px;font-weight:700;color:var(--w);letter-spacing:-.2px}
+.modal-sub{font-size:11px;color:var(--g3);margin-top:2px}
+.modal-close{background:transparent;border:1px solid var(--bd2);color:var(--g2);width:30px;height:30px;border-radius:7px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-family:inherit;flex-shrink:0;transition:all .15s}
+.modal-close:hover{background:var(--bg4);color:var(--w);border-color:var(--bd3)}
+.modal-body{padding:18px 22px;overflow-y:auto;flex:1;scrollbar-width:thin;scrollbar-color:var(--g4) transparent}
+.modal-body::-webkit-scrollbar{width:5px}
+.modal-body::-webkit-scrollbar-thumb{background:var(--g4);border-radius:4px}
+
+/* COVERAGE TABS */
+.cov-tabs{display:flex;gap:4px;margin-bottom:14px;border-bottom:1px solid var(--bd);padding-bottom:0;flex-wrap:wrap}
+.cov-tab{padding:8px 14px;font-size:11px;font-weight:600;cursor:pointer;border:none;background:transparent;color:var(--g3);font-family:inherit;border-bottom:2px solid transparent;margin-bottom:-1px;transition:all .15s;white-space:nowrap}
+.cov-tab:hover{color:var(--g1)}
+.cov-tab.on{color:var(--w);border-bottom-color:var(--r);background:rgba(229,57,53,.05)}
+.cov-pane{display:none}
+.cov-pane.on{display:block}
+.cov-summary{display:flex;gap:12px;margin-bottom:14px;flex-wrap:wrap}
+.cov-stat{flex:1;min-width:120px;background:var(--bg4);border:1px solid var(--bd);border-radius:8px;padding:10px 12px}
+.cov-stat-v{font-size:18px;font-weight:700;color:var(--w);letter-spacing:-.5px}
+.cov-stat-v.r{color:var(--r)}
+.cov-stat-l{font-size:10px;color:var(--g3);margin-top:2px}
+.cov-cat-block{margin-bottom:14px}
+.cov-cat-h{font-size:11px;font-weight:700;color:var(--r);margin-bottom:7px;letter-spacing:.05em;text-transform:uppercase;display:flex;align-items:center;gap:6px}
+.cov-cat-h::before{content:'';width:3px;height:12px;background:var(--r);border-radius:2px}
+.cov-medias{display:flex;flex-wrap:wrap;gap:5px}
+.cov-medias-flat{display:flex;flex-wrap:wrap;gap:6px;padding:4px 0}
+.cov-media{background:var(--bg4);border:1px solid var(--bd2);color:var(--g1);font-size:11px;padding:5px 10px;border-radius:14px;font-weight:500}
+.cov-disclaimer{font-size:11px;color:var(--g2);line-height:1.65;margin-bottom:14px;padding:10px 13px;background:rgba(229,57,53,.05);border:1px solid rgba(229,57,53,.18);border-radius:8px;border-left:3px solid var(--r)}
+
+/* PATENT NEWS LIST */
+.news-section-h{font-size:11px;font-weight:700;color:var(--w);letter-spacing:.04em;margin-bottom:10px;display:flex;align-items:center;gap:6px;padding:6px 0;border-bottom:1px solid rgba(229,57,53,.18)}
+.news-block{padding:11px 0;border-bottom:1px solid var(--bd);transition:background .15s}
+.news-block:last-child{border:none}
+.news-block:hover{background:rgba(229,57,53,.03)}
+.news-src{display:flex;align-items:center;gap:7px;font-size:11px;color:var(--g2);margin-bottom:6px;flex-wrap:wrap}
+.news-src-ic{width:18px;height:18px;border-radius:4px;background:rgba(96,165,250,.15);color:#60A5FA;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0}
+.news-src-ic.major{background:rgba(229,57,53,.18);color:var(--r);border:1px solid rgba(229,57,53,.3)}
+.news-src-name{font-weight:700;color:var(--g1);font-size:12px}
+.news-src-date{color:var(--g3);margin-left:auto;font-size:10px}
+.news-tier-badge{display:inline-block;font-size:9px;padding:2px 7px;border-radius:10px;font-weight:700;background:rgba(229,57,53,.12);color:var(--r);border:1px solid rgba(229,57,53,.28);letter-spacing:.04em}
+.news-title{font-size:13px;font-weight:600;color:#93C5FD;line-height:1.5;margin-bottom:0;display:block;text-decoration:none;cursor:pointer;transition:color .15s}
+.news-title:hover{color:#BFDBFE;text-decoration:underline}
+.news-desc{font-size:11px;color:var(--g2);line-height:1.65;margin-top:6px}
+.news-related{display:flex;flex-direction:column;gap:4px;margin-top:8px;padding-top:8px;border-top:1px dashed var(--bd)}
+.news-related-item{font-size:11px;color:var(--g2);display:flex;align-items:center;gap:8px;padding:3px 0}
+.news-related-t{color:#60A5FA;font-weight:600;flex:1;cursor:pointer}
+.news-related-t:hover{color:#93C5FD;text-decoration:underline}
+.news-related-src{color:var(--g3);font-size:10px;flex-shrink:0}
+
+/* CLIENT MODAL — CATEGORIZED */
+.cli-cats{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+.cli-cat{background:var(--bg4);border:1px solid var(--bd);border-radius:10px;padding:14px;transition:all .18s;display:flex;flex-direction:column}
+.cli-cat:hover{border-color:rgba(229,57,53,.3);transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.2)}
+.cli-cat-h{font-size:12px;font-weight:700;color:var(--w);margin-bottom:10px;letter-spacing:.02em;padding-bottom:7px;border-bottom:1px solid var(--bd);display:flex;align-items:center;gap:7px}
+.cli-cat-ic{font-size:14px;line-height:1;flex-shrink:0}
+.cli-list{display:flex;flex-direction:column;gap:5px;flex:1}
+.cli-item{font-size:12px;color:var(--g1);font-weight:500;padding:3px 0;display:flex;align-items:center;gap:7px}
+.cli-item::before{content:'';width:5px;height:5px;border-radius:50%;background:rgba(229,57,53,.55);flex-shrink:0}
+.cli-item.more{color:var(--r);font-weight:700;letter-spacing:.1em;font-size:13px}
+.cli-item.more::before{background:rgba(229,57,53,.85)}
+.cli-case{font-size:10.5px;color:var(--r);font-weight:600;margin-top:10px;padding-top:9px;border-top:1px dashed var(--bd);line-height:1.55;letter-spacing:-.1px}
+
+/* DMP MODAL GRID */
+.dmp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:10px}
+.dmp-card{background:var(--bg4);border:1px solid var(--bd);border-radius:10px;padding:13px 14px;transition:border-color .15s}
+.dmp-card:hover{border-color:rgba(229,57,53,.3)}
+.dmp-card-h{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px;padding-bottom:9px;border-bottom:1px solid var(--bd);flex-wrap:wrap}
+.dmp-name{font-size:13px;font-weight:700;color:var(--w);letter-spacing:-.2px}
+.dmp-tag{font-size:10px;padding:2px 9px;border-radius:12px;background:rgba(229,57,53,.12);color:var(--r);border:1px solid rgba(229,57,53,.25);font-weight:600}
+.dmp-row{display:flex;flex-direction:column;gap:3px;margin-bottom:8px}
+.dmp-row:last-child{margin-bottom:0}
+.dmp-row-l{font-size:9.5px;color:var(--g3);font-weight:700;letter-spacing:.05em;text-transform:uppercase}
+.dmp-row-v{font-size:11.5px;color:var(--g1);line-height:1.6}
+
+/* MAJOR CLIENTS — OVERVIEW GRID (9 업종 카드, 비클릭/디스플레이용) */
+.mc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.mc-tile{background:var(--bg4);border:1px solid var(--bd);border-radius:10px;padding:13px;display:flex;flex-direction:column;position:relative;overflow:hidden;transition:border-color .2s,background .2s}
+.mc-tile:hover{border-color:rgba(229,57,53,.22);background:rgba(229,57,53,.03)}
+.mc-tile-h{display:flex;align-items:center;gap:8px;margin-bottom:9px;padding-bottom:7px;border-bottom:1px solid var(--bd)}
+.mc-tile-ic{font-size:16px;line-height:1;flex-shrink:0}
+.mc-tile-n{font-size:12px;font-weight:700;color:var(--w);letter-spacing:-.1px}
+.mc-tile-clients{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:9px;flex:1;align-content:flex-start}
+.mc-tile-chip{padding:3px 8px;background:var(--bg2);border:1px solid var(--bd2);border-radius:11px;font-size:10.5px;color:var(--g1);font-weight:500;line-height:1.3;letter-spacing:-.1px}
+.mc-tile-chip.more{background:rgba(229,57,53,.08);border-color:rgba(229,57,53,.22);color:var(--r);font-weight:700}
+.mc-tile-case{font-size:10px;color:var(--g2);line-height:1.55;padding-top:7px;border-top:1px dashed var(--bd);font-weight:500;letter-spacing:-.15px}
+
+/* Old mc-logorow (kept for backward compat — not used) */
+.mc-logorow{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px;padding:12px;background:var(--bg4);border-radius:8px;border:1px solid var(--bd)}
+.mc-logo-chip{padding:6px 11px;background:var(--bg2);border:1px solid var(--bd2);border-radius:14px;font-size:10.5px;color:var(--g1);font-weight:600;letter-spacing:.01em;transition:all .15s}
+.mc-logo-chip:hover{border-color:rgba(229,57,53,.35);color:var(--w);background:rgba(229,57,53,.05)}
+
+/* SCROLL HIGHLIGHT */
+@keyframes scrollHighlight{
+  0%{box-shadow:0 0 0 0 rgba(229,57,53,0)}
+  20%{box-shadow:0 0 0 4px rgba(229,57,53,.35),0 0 30px rgba(229,57,53,.25)}
+  100%{box-shadow:0 0 0 0 rgba(229,57,53,0)}
+}
+.scroll-highlight{animation:scrollHighlight 1.4s ease-out}
+
+@media(max-width:700px){.hero-kv,.stat-row,.grid4,.grid2x,.onesheet-grid,.builder-layout{grid-template-columns:1fr 1fr}.why-grid{grid-template-columns:1fr}.mc-grid{grid-template-columns:1fr 1fr}.modal-box{max-height:calc(100vh - 40px)}.modal-head{padding:14px 16px}.modal-body{padding:14px 16px}.dmp-grid{grid-template-columns:1fr}}
+@media(max-width:480px){.mc-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -249,10 +384,26 @@ code{font-family:monospace;font-size:9px;color:var(--g3);background:var(--bg4);p
       <div class="hero-sub" id="hero-sub">딥러닝 기반 AI 타겟팅, 모바일 앱 커버리지 96%+, 국내 DSP 최초 TAG Brand Safety 인증.<br>국내 최다 7종 DMP 파트너 연동. nap dsp로 광고주의 KPI를 달성하세요.</div>
 
       <div class="hero-kv">
-        <div class="kv"><div class="kv-val">96%+</div><div class="kv-lbl">모바일 커버리지</div></div>
-        <div class="kv"><div class="kv-val" style="color:var(--r)">7종</div><div class="kv-lbl">DMP 파트너 연동</div></div>
-        <div class="kv"><div class="kv-val">2배+</div><div class="kv-lbl">전환율 향상 · 특허 보유</div></div>
-        <div class="kv"><div class="kv-val" style="color:var(--w)">5,000+</div><div class="kv-lbl">집행 광고주</div></div>
+        <div class="kv clickable" data-kv="coverage" title="대표 매체 리스트 보기">
+          <div class="kv-val">96%+</div>
+          <div class="kv-lbl">모바일 커버리지</div>
+          <div class="kv-hint">대표 매체 →</div>
+        </div>
+        <div class="kv clickable" data-kv="dmp" title="DMP 파트너 7종 보기">
+          <div class="kv-val" style="color:var(--r)">7종</div>
+          <div class="kv-lbl">DMP 파트너 연동</div>
+          <div class="kv-hint">파트너 보기 →</div>
+        </div>
+        <div class="kv clickable" data-kv="patent" title="AI 특허 관련 기사 보기">
+          <div class="kv-val">2배+</div>
+          <div class="kv-lbl">전환율 향상 · 특허 보유</div>
+          <div class="kv-hint">관련 기사 →</div>
+        </div>
+        <div class="kv clickable" data-kv="clients" title="주요 집행 광고주 보기">
+          <div class="kv-val" style="color:var(--w)">5,000+</div>
+          <div class="kv-lbl">집행 광고주</div>
+          <div class="kv-hint">광고주 보기 →</div>
+        </div>
       </div>
     </div>
 
@@ -515,6 +666,25 @@ code{font-family:monospace;font-size:9px;color:var(--g3);background:var(--bg4);p
 
 <div id="toast"></div>
 
+<!-- ========== MODAL ========== -->
+<div class="modal-overlay" id="modal" role="dialog" aria-modal="true">
+  <div class="modal-box">
+    <div class="modal-head">
+      <div class="modal-head-l">
+        <div class="modal-icon" id="modal-icon"></div>
+        <div>
+          <div class="modal-title" id="modal-title"></div>
+          <div class="modal-sub" id="modal-sub"></div>
+        </div>
+      </div>
+      <button class="modal-close" id="modal-close" aria-label="닫기">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 2l10 10M12 2L2 12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <div class="modal-body" id="modal-body"></div>
+  </div>
+</div>
+
 <script>
 /* ============================================================
    DATA
@@ -557,19 +727,169 @@ var KPICLS = {ROAS:'b-am',Branding:'b-bl','UV확보':'b-bl',CPI:'b-r',CPA:'b-r',
 
 var PRODS = [
   {id:'rm',n:'Reach Max',c:'branding',k:['Branding','UV확보'],i:['*'],d:'중복 없는 최대 UV 도달. 신규 오디언스에게 nap dsp 프리미엄 인벤토리로 메시지를 효과적으로 전달합니다.',ps:['UV 극대화','중복 도달 제거']},
-  {id:'bl',n:'Brand lift',c:'branding',k:['Branding','UV확보'],i:['*'],d:'비디오 광고 전후 브랜드 인지도·호감도 변화를 설문 기반으로 정량 측정합니다.',ps:['브랜드 효과 정량화','크리에이티브 효율 검증']},
-  {id:'bp',n:'Brand lift/Bumper',c:'video',k:['Branding'],i:['Personal Finance','Automotive','Travel','Arts & Entertainment'],d:'5초 논스킵 범퍼팩. 짧지만 강한 임팩트로 브랜드 메시지 전달과 Brand lift 측정을 동시에 적용합니다.',ps:['논스킵 노출 보장','VTR 90%+ 사례 다수']},
-  {id:'st',n:'Smart tracking',c:'performance',k:['CPI','CPA','ROAS'],i:['*'],d:'전환 스크립트 삽입 기반 이벤트 최적화. 설치·가입·구매 등 목표 이벤트 기준으로 자동 최적화 운영합니다.',ps:['이벤트 기반 자동 최적화','다이나믹 매체 조정']},
-  {id:'cr',n:'Commerce retargeting',c:'commerce',k:['ROAS','CPA','Re-Engagement'],i:['Shopping','Pets','Real Estate','Style & Fashion'],d:'유저 구매 행동·라이프사이클 기반 다이나믹 리타겟팅. All-Postback 데이터로 구매 가능성 높은 시점의 유저만 타겟합니다.',ps:['ROAS 1,000%+ 사례','구매사이클 분석 기반']},
-  {id:'db',n:'Dynamic Banner',c:'commerce',k:['ROAS','CPA','Re-Engagement'],i:['Shopping','Real Estate','Pets','Style & Fashion'],d:'상품 피드(EP URL) 연동으로 유저별 관심 상품을 자동 노출합니다.',ps:['소재 없이 자동 구성','개인화 광고']},
-  {id:'lc',n:'Live commerce',c:'commerce',k:['ROAS','UV확보'],i:['Shopping','Style & Fashion','Food & Drink'],d:'라이브방송 카운트다운 배너에서 방송 후 즉시 구매 CTA로 자동 전환합니다.',ps:['라이브 전후 자동전환','CTR 극대화']},
-  {id:'sc',n:'Script Banner',c:'performance',k:['CPI'],i:['Hobbies & Interests','Technology & Computing'],d:'HTML 기반 Playable Ad. 게임·앱 설치를 유도하는 인터랙티브 배너입니다.',ps:['앱 체험형 광고','CTR 극대화']},
-  {id:'oy',n:'Olive young Special',c:'special',k:['ROAS','UV확보','Branding'],i:['Style & Fashion','Health & Fitness'],d:'올리브영 구매·방문 이력 유저 기반 타겟팅. 스페셜 인벤토리로 매체-유저 핏을 극대화합니다.',ps:['올리브영 고관심 유저','일반 대비 CTR 우수']},
-  {id:'wn',n:"Women's/Men's Network",c:'special',k:['Branding','UV확보'],i:['Style & Fashion','Health & Fitness','Family & Parenting'],d:'성별 특화 프리미엄 매체 인벤토리. 3049 여성 집중 앱(아파트너·캐치테이블·마미톡·키즈노트 등)에서 광고를 집행합니다.',ps:['타겟 적중도 극대화','프리미엄 인벤토리']},
-  {id:'kk',n:'Kakao x nap dsp',c:'special',k:['Branding','UV확보'],i:['*'],d:'국내 DSP 최초 다음(Daum) 메인·카카오톡 비즈보드 노출. 제공 PSD 파일로만 소재를 제작해야 합니다.',ps:['국내 DSP 최초 집행','카카오 생태계 커버']},
-  {id:'cv',n:'CTV (IPTV)',c:'video',k:['Branding','UV확보'],i:['Automotive','Travel','Arts & Entertainment','Personal Finance','Technology & Computing'],d:'통신 3사 IPTV 15초/30초 논스킵 광고. 모바일과 CTV 크로스 리타겟팅으로 TV→모바일 연속 노출이 가능합니다.',ps:['VTR 95% 사례','CTV+Mobile 크로스 리타겟']},
-  {id:'nv',n:'Native video',c:'video',k:['Branding','UV확보'],i:['*'],d:'자연스러운 피드형 영상 광고. 세로형(9:16) 지원으로 모바일 VTR을 극대화합니다. 정부기관 VTR 80%, 금융사 VTR 91% 사례.',ps:['세로형 VTR 80~91%','피드 자연 노출']}
+  {id:'bl',n:'Brand lift',c:'branding',k:['Branding','UV확보'],i:['*'],d:'합리적인 단가와 넓은 타겟 커버리지 확보로 브랜드 인지도 강화에 적합한 상품. MO/PC 동시 노출 가능합니다.',ps:['MO/PC 동시 노출','넓은 타겟 커버리지']},
+  {id:'kk',n:'Kakao x nap dsp',c:'special',k:['Branding','UV확보'],i:['*'],d:'카카오 계열사 및 카카오 프리미엄 제휴 매체에 정교한 DMP 타겟팅으로 브랜드 메시지 노출에 적합한 상품. 국내 DSP 최초 카카오톡/다음 메인 비즈보드 노출.',ps:['국내 DSP 최초 카카오 메인','카카오 프리미엄 매체']},
+  {id:'ct',n:'Catch table x nap dsp',c:'special',k:['Branding'],i:['Food & Drink','Style & Fashion'],d:'고소득자, 미식 관심 타겟을 위한 브랜딩 캠페인에 적합한 캐치테이블 단독 지면 상품.',ps:['캐치테이블 단독 지면','고소득·미식 관심 타겟']},
+  {id:'cb',n:'Contents banner',c:'branding',k:['Branding'],i:['*'],d:'이미지·텍스트·CTA 버튼의 유기적 결합을 통해 단순 노출을 넘어 브랜드에 대한 신뢰와 탐색을 심화시키는 고관여 타겟 맞춤형 상품.',ps:['고관여 타겟 맞춤형','캐시워크·KB PAY 등']},
+  {id:'st',n:'Smart tracking',c:'performance',k:['CPI','CPA','ROAS'],i:['*'],d:'프리미엄 매체 중심 노출로 브랜드 세이프티 및 전환/ROAS 목표 캠페인에 적합한 상품. MMP All-Postback 연동 기반 자동 최적화.',ps:['프리미엄 매체 중심','MMP 연동 자동 최적화']},
+  {id:'lc',n:'Live commerce',c:'commerce',k:['ROAS','UV확보'],i:['Shopping','Style & Fashion','Food & Drink'],d:'라이브 방송 시작 전·후 상황에 따라 배너 메시지가 동적으로 변화하여 실시간 시청 전환 유도 목적에 적합한 상품.',ps:['라이브 전후 자동전환','CTA 커스텀 가능']},
+  {id:'cr',n:'Commerce retargeting',c:'commerce',k:['ROAS','CPA','Re-Engagement'],i:['Shopping','Pets','Real Estate','Style & Fashion'],d:'광고주의 상품 피드를 연동해 관심 상품을 본 유저에게 자동으로 맞춤형 광고를 노출하는 리타겟팅 솔루션 상품.',ps:['포스트백 리타겟팅','상품 피드 자동 연동']},
+  {id:'oy',n:'Olive young Special',c:'special',k:['ROAS','UV확보','Branding'],i:['Style & Fashion','Health & Fitness'],d:'올리브영 랜딩 진행 캠페인에 한하여, 여성 성향 매체 위주 노출로 주요 타겟의 주목도 높은 광고 진행이 가능한 타겟 특화 상품.',ps:['올리브영 고관여 DMP','예산 구간별 단가 할인']},
+  {id:'mn',n:"Men's network",c:'special',k:['Branding','UV확보'],i:['Hobbies & Interests','Technology & Computing','Sports'],d:'남성 중심 커뮤니티 매체를 통한 강력한 타겟 도달력으로 관심도 높은 실유저와의 연결을 강화하는 타겟 특화 상품.',ps:['디시·에펨·MLB PARK 등','남성 커뮤니티 핀포인트']},
+  {id:'wn',n:"Women's network",c:'special',k:['Branding','UV확보'],i:['Style & Fashion','Health & Fitness','Family & Parenting'],d:'여성 성향 매체 위주 노출로 주요 타겟의 주목도 높은 광고 진행이 가능한 타겟 특화 상품.',ps:['아파트너·캐치테이블·마미톡','3049 여성 집중']},
+  {id:'bp',n:'Brand lift / Bumper',c:'video',k:['Branding'],i:['Personal Finance','Automotive','Travel','Arts & Entertainment'],d:'합리적인 단가와 넓은 타겟 커버리지 확보로 브랜드 인지도 강화 / 짧은 시간 내 강력한 메시지 전달과 높은 주목도 기반 인지 확산.',ps:['Video CPVC 20원~','MO·PC·CTV 가능']},
+  {id:'nv',n:'Native video',c:'video',k:['Branding','UV확보'],i:['*'],d:'콘텐츠 사이에 자연스럽게 배치되어, 일반 콘텐츠와 유사한 Look&Feel을 유지하여 광고에 대한 거부감을 최소화하고 높은 참여를 유도하는 상품.',ps:['카카오톡 노출','5초 이상 자연스러운 노출']},
+  {id:'cv',n:'CTV (IPTV, Fast channel)',c:'video',k:['Branding','UV확보'],i:['Automotive','Travel','Arts & Entertainment','Personal Finance','Technology & Computing'],d:'TV 기반 플랫폼에서 가족 단위 또는 고관여 시청자 대상 노출이 가능해 신뢰 기반의 브랜딩에 최적화된 상품.',ps:['SK BTV·GENIE TV·LG U+TV','15초/30초 논스킵']}
 ];
+
+/* ============================================================
+   PRODUCT_DETAILS — 상품별 상세 (PDF p.13~31, p.33~35 반영)
+============================================================ */
+var PRODUCT_DETAILS = {
+  bl:{
+    rows:[
+      ['캠페인 유형','브랜딩 (MO) · 브랜딩 (PC)'],
+      ['배너 사이즈','<b>MO</b>: 320×50 · 320×100 · 300×250 · 320×480 · Native(1200×627) · bizboard(1029×258)<br><b>PC</b>: 970×90 · 728×90 · 300×250 · 250×250 · 160×600 · 120×600 · 300×600'],
+      ['노출 플랫폼','MO APP/WEB · PC'],
+      ['단가 (Gross)','<b>MO</b>: CPC 100원 / CPM 3,800원<br><b>PC</b>: CPM 500원'],
+      ['주요 노출지면','<b>MO</b>: 다음, T멤버십, KB PAY, CJ ONE, 캐치테이블, 캐시워크 등<br><b>PC</b>: 언론사, MLB PARK, 디시인사이드 등'],
+      ['타겟팅','<b>MO</b>: 리타겟팅, 관심사, DMP, 광고주 ADID 등<br><b>PC</b>: 관심사']
+    ]
+  },
+  rm:{
+    rows:[
+      ['캠페인 유형','유입 · 트래픽(노출) · 도달 극대화'],
+      ['배너 사이즈','320×50, 300×250, 320×480, 970×90, 728×90, 250×250, 160×600, 120×600, 300×600'],
+      ['노출 플랫폼','MO APP/WEB · PC'],
+      ['단가 (Gross)','CPC 40원'],
+      ['주요 노출지면','언론사, 하나머니, 신한 SOL 페이 등'],
+      ['타겟팅','논타겟팅, 관심사, 데모 <span style="color:var(--r);font-weight:700">*PC지면은 데모 불가</span>']
+    ]
+  },
+  kk:{
+    rows:[
+      ['캠페인 유형','브랜드 세이프티 · 브랜딩'],
+      ['배너 사이즈','Native(1200×627) · bizboard(1029×258)'],
+      ['노출 플랫폼','MO APP/WEB <span style="color:var(--r);font-weight:700">*AOS only</span>'],
+      ['단가 (Gross)','CPM 1,500원'],
+      ['주요 노출지면','카카오톡, 카카오뱅크, 티맵, 키즈노트, 에브리타임 등'],
+      ['타겟팅','리타겟팅, 관심사, DMP, 광고주 ADID 등']
+    ],
+    note:'병원·금융 등 일부 업종 및 카카오 경쟁사는 집행 제한'
+  },
+  ct:{
+    rows:[
+      ['캠페인 유형','브랜드 세이프티 · 브랜딩'],
+      ['배너 사이즈','320×50'],
+      ['노출 플랫폼','MO APP/WEB'],
+      ['단가 (Gross)','CPM 4,400원'],
+      ['주요 노출지면','캐치테이블 (검색하기, 웨이팅대기, 마이다이닝, 알림센터, 마이페이지)'],
+      ['타겟팅','리타겟팅, 관심사, DMP, 광고주 ADID 등']
+    ]
+  },
+  cb:{
+    rows:[
+      ['캠페인 유형','브랜딩 (MO)'],
+      ['배너 사이즈','320×50 · 320×100 · 300×250 · 320×480'],
+      ['노출 플랫폼','MO APP/WEB'],
+      ['단가 (Gross)','CPC 90원'],
+      ['주요 노출지면','캐시워크, KB PAY, 스코어센터 LIVE, 타임캐시 등'],
+      ['타겟팅','리타겟팅, 관심사, DMP, 광고주 ADID 등']
+    ]
+  },
+  st:{
+    rows:[
+      ['캠페인 유형','UA · ROAS · 브랜드 세이프티'],
+      ['배너 사이즈','320×50, 320×100, 300×250, 320×480, Native(1200×627), bizboard(1029×258)'],
+      ['노출 플랫폼','MO APP/WEB <span style="color:var(--r);font-weight:700">*AOS only</span>'],
+      ['단가 (Gross)','CPC 150원'],
+      ['주요 노출지면','카카오톡, 카카오뱅크, 티맵, 키즈노트, 에브리타임, 캐치테이블, 캐시워크, KB pay 등'],
+      ['타겟팅','리타겟팅, 관심사, DMP, 광고주 ADID 등']
+    ],
+    note:'업종에 따라 카카오 지면 노출 제한될 수 있음'
+  },
+  lc:{
+    rows:[
+      ['캠페인 유형','라이브 방송 · 한정 혜택 · 타임딜 · 런칭 이벤트'],
+      ['배너 사이즈','320×50 · 320×100 · 300×250 · 320×480'],
+      ['노출 플랫폼','MO APP/WEB'],
+      ['단가 (Gross)','CPC 105원'],
+      ['상품 설명','<b>방송 전</b>: 실시간 카운트다운으로 한정 혜택·타임딜·런칭 이벤트 최적화<br><b>방송 후</b>: 실시간 타이머로 혜택 적용 시간 시각화 → 시청 전환 유도<br>· CTA 텍스트/블록 색상 커스터마이징 가능<br>· 클릭 아이콘 적용 및 CTA 텍스트로 대규모 프로모션에도 활용'],
+      ['타겟팅','리타겟팅, 관심사, DMP, 광고주 ADID 등']
+    ]
+  },
+  cr:{
+    rows:[
+      ['캠페인 유형','ROAS · 피드 리타겟팅'],
+      ['배너 사이즈','320×50, 320×100, 300×250, 320×480, Native(1200×627)'],
+      ['노출 플랫폼','MO APP/WEB <span style="color:var(--r);font-weight:700">*AOS only</span>'],
+      ['단가 (Gross)','CPC 105원'],
+      ['주요 노출지면','캐시워크, T멤버십, KB PAY, CJ ONE, 캐치테이블, 아파트너 등'],
+      ['타겟팅','포스트백 리타겟팅']
+    ]
+  },
+  oy:{
+    rows:[
+      ['캠페인 유형','타겟 집중형 · 브랜딩'],
+      ['배너 사이즈','320×50, 320×100, 300×250, 320×480, Native(1200×627), bizboard(1029×258)'],
+      ['노출 플랫폼','MO APP/WEB'],
+      ['단가 (Gross)','CPC 87~92원 <span style="color:var(--r);font-weight:700">*예산 구간에 따른 단가 할인 적용</span>'],
+      ['주요 노출지면','캐치테이블, 캐시워크, 쿠차, 덕애드, 아파트너, 키즈노트, 마미톡 등'],
+      ['타겟팅','올리브영 및 뷰티&코스메틱 고관여 DMP<br>· 올리브영 앱 활성화/방문자/월 10만원+ 결제이력<br>· 뷰티 카테고리 앱 상위 10% 결제 / 쁘띠시술·성형의원·에스테틱 결제이력<br>· 여성·10~30대 커뮤니티 활동자 / 셀프뷰티족·알뜰뷰티족·겟잇뷰티족<br>· IPTV 뷰티/패션 컨텐츠 시청이력']
+    ]
+  },
+  mn:{
+    rows:[
+      ['캠페인 유형','타겟 집중형 · 브랜딩'],
+      ['배너 사이즈','320×50, 320×100, 300×250'],
+      ['노출 플랫폼','MO APP/WEB <span style="color:var(--r);font-weight:700">*AOS only</span>'],
+      ['단가 (Gross)','CPM 150원 <span style="color:var(--r);font-weight:700">*매체 환경에 따라 단가 변동</span>'],
+      ['주요 노출지면','디시인사이드, 에펨코리아, MLB PARK, 인벤, OP.GG 등'],
+      ['타겟팅','논타겟팅, 데모']
+    ]
+  },
+  wn:{
+    rows:[
+      ['캠페인 유형','타겟 집중형 · 브랜딩'],
+      ['배너 사이즈','320×50, 320×100, 300×250, 320×480, Native(1200×627), bizboard(1029×258)'],
+      ['노출 플랫폼','MO APP/WEB <span style="color:var(--r);font-weight:700">*AOS only</span>'],
+      ['단가 (Gross)','CPM 3,800원 <span style="color:var(--r);font-weight:700">*매체 환경에 따라 단가 변동</span>'],
+      ['주요 노출지면','캐치테이블, 캐시워크, 쿠차, 덕애드, 아파트너, 키즈노트, 마미톡 등'],
+      ['타겟팅','논타겟팅, 데모']
+    ]
+  },
+  bp:{
+    rows:[
+      ['캠페인 유형','인지 · 브랜딩 · 잠재고객 확보 (Brand lift / Bumper)'],
+      ['소재 길이','<b>Brand lift</b>: 15~240초 (CTV 15초)<br><b>Bumper</b>: 5~7초'],
+      ['노출 플랫폼','<b>Brand lift</b>: MO APP/WEB · PC · CTV<br><b>Bumper</b>: MO APP/WEB · PC'],
+      ['단가 (Gross)','<b>Brand lift Video</b>: CPVC 20원 / CPM 8,000원<br><b>Brand lift CTV</b>: CPV 8원 / CPM 8,000원<br><b>Bumper</b>: CPM 4,000원'],
+      ['주요 노출지면','언론사, OK 캐시백, SOOP, CJ ONE, T 멤버십 등'],
+      ['타겟팅','리타겟팅, 관심사, DMP, 광고주 ADID 등 <span style="color:var(--r);font-weight:700">*PC지면은 논타겟팅·관심사만 가능</span>']
+    ]
+  },
+  nv:{
+    rows:[
+      ['캠페인 유형','프리미엄 브랜딩'],
+      ['소재 길이','5초 이상'],
+      ['노출 플랫폼','MO APP/WEB'],
+      ['단가 (Gross)','CPM 8,000원'],
+      ['주요 노출지면','카카오톡'],
+      ['타겟팅','리타겟팅, 관심사, DMP, 광고주 ADID 등']
+    ]
+  },
+  cv:{
+    rows:[
+      ['캠페인 유형','프리미엄 브랜딩'],
+      ['소재 길이','15초 · 30초'],
+      ['노출 플랫폼','IPTV · Fast channel'],
+      ['단가 (Gross)','CPV 15원'],
+      ['주요 노출지면','SK BTV, GENIE TV, LG 유플러스TV 등'],
+      ['타겟팅','관심사, DMP'],
+      ['노출 방식','<b>IPTV</b>: 프로그램 고지 후, 첫 광고 구간 제외 7구좌 내 랜덤 노출 (15초)<br><b>Fast 채널</b>: 콘텐츠 시청 중 8~10분마다 중간 광고 송출 (15초)']
+    ]
+  }
+};
 
 var LAYERS = [
   {id:'basic',n:'Basic',b:'lb-ba',d:'성별·연령·OS·통신사·시간대/요일·지역 기반 기본 데모 타겟팅. 모든 캠페인의 1차 레이어로 필수 설정됩니다.',s:['3544 여성','AOS 단독','주말/저녁 집중','타 통신사 디타겟','지역(강남/판교)']},
@@ -582,14 +902,171 @@ var LAYERS = [
 ];
 
 var DMPS = [
-  {n:'KB AdMarket',d:'금융거래·소비수준',ind:'Personal Finance / 금융·보험·증권',seg:'경제세그_중산층 이상, 금융상품 조회자'},
-  {n:'SKP DMP',d:'쇼핑·라이프스타일',ind:'Shopping / Family & Parenting / 통신',seg:'소셜커머스 구매자, 사회초년생, 신혼부부'},
-  {n:'TG 360',d:'오프라인 결제·행동',ind:'Food & Drink / 웨딩 / Real Estate',seg:'오프라인 결제 패턴, 웨딩 관련 결제자'},
-  {n:'Loplat',d:'위치·매장 방문이력',ind:'Automotive / 럭셔리 / Sports',seg:'청담 쥬얼리 방문자, 딜러사 방문자, 안과 주변 3회+'},
-  {n:'Lotte DeepAD',d:'L.Point 결제이력',ind:'Style & Fashion / Health & Fitness',seg:'패션소비스타일_명품쇼핑족, 뷰티소비스타일_명품뷰티족'},
-  {n:'NHN Dighty',d:'앱 설치 데이터',ind:'Travel / Technology & Computing / Hobbies & Interests',seg:'항공·숙박 앱 보유자, 게임앱 상위 15% 설치자'},
-  {n:'N.DMP (나스미디어)',d:'광고반응·미디어소비',ind:'전 업종 기본 레이어',seg:'미디어소비_홈쇼핑 뷰티, 광고반응 이력'}
+  {n:'KB AdMarket',d:'금융거래·소비수준',ind:'Personal Finance / 금융·보험·증권',seg:'실제 카드결제·금융거래 데이터 기반 — 금융자산 보유 세그, 대출/투자/카드 관심자, 경제활동 인구, 소득수준별 세그먼트, 금융상품 조회·가입자'},
+  {n:'SKP DMP',d:'쇼핑·라이프스타일',ind:'Shopping / Family & Parenting / 통신',seg:'11번가·위메프 등 쇼핑 구매이력, 라이프스테이지 (사회초년생·신혼부부·육아층), 쇼핑성향 (가성비/프리미엄), SKT 통신 가입자 데이터'},
+  {n:'TG 360',d:'오프라인 결제·행동',ind:'Food & Drink / 웨딩 / Real Estate',seg:'신용카드 오프라인 결제이력, 업종별 결제 패턴 (외식·쇼핑·웨딩·의료), 지역별 소비행동, 결제 빈도·금액별 세그먼트'},
+  {n:'Loplat',d:'위치·매장 방문이력',ind:'Automotive / 럭셔리 / Sports',seg:'GPS 기반 매장 방문이력 (백화점·딜러사·병원·매장), 방문 빈도·체류시간 패턴, 경쟁사 매장 방문자, 상권별 방문 행동'},
+  {n:'Lotte DeepAD',d:'L.Point 결제이력',ind:'Style & Fashion / Health & Fitness',seg:'L.Point 회원 실결제 데이터, 카테고리별 구매패턴 (패션·뷰티·식음·리빙), 명품/럭셔리 구매자, 소비스타일·가족구성 세그먼트'},
+  {n:'NHN Dighty',d:'앱 설치 데이터',ind:'Travel / Technology & Computing / Hobbies & Interests',seg:'전 카테고리 앱 설치·실행 이력, 카테고리별 헤비유저 (상위 15% 등), 경쟁사 앱 사용자 ADID, 신규 설치자, 앱 보유 조합 분석'},
+  {n:'N.DMP (나스미디어)',d:'광고반응·미디어소비',ind:'전 업종 기본 레이어',seg:'광고 클릭·노출·조회 이력, 미디어소비 패턴 (뉴스·엔터·홈쇼핑 등), 검색/방문사이트 카테고리, 광고반응 우수 유저 세그먼트'}
 ];
+
+/* ============================================================
+   COVERAGE — 디바이스/시트별 대표 매체 리스트 (Excel 데이터 반영)
+============================================================ */
+var COVERAGE_SHEETS = [
+  {
+    id:'android', label:"AOS", desc:"안드로이드 모바일 — 국내 최대 커버리지",
+    summary:[{"v": "96%+", "l": "AOS 앱 커버리지", "r": true}, {"v": "71+", "l": "AOS 프리미엄 인벤토리"}, {"v": "16개", "l": "카테고리"}],
+    cats:[
+      {n:"커뮤니케이션",m:["카카오톡", "다음", "키즈노트"]},
+      {n:"스포츠",m:["LIVE스코어", "카카오골프예약", "KBO STATS", "프렌즈 스크린"]},
+      {n:"라이프스타일",m:["T 멤버십", "CJ ONE", "후후", "L.POINT", "OK캐쉬백", "신세계포인트", "우리동네GS", "아파트너", "점신", "베이비타임", "NH멤버스", "해피포인트"]},
+      {n:"금융",m:["KBPay", "카카오페이", "토스", "카카오뱅크", "NH pay", "디지로카", "우리카드", "신한 SOL페이", "하나머니", "삼쩜삼", "하나Pay", "증권통", "편한 가계부", "핀크"]},
+      {n:"엔터테인먼트",m:["카카오웹툰", "롯데시네마", "SOOP", "인스티즈", "SBS PLAY", "KBS kong", "MBC mini", "롤 백과", "뮤빗 Mubeat"]},
+      {n:"소셜",m:["다음카페", "에브리타임", "디시인사이드"]},
+      {n:"비즈니스",m:["알바몬", "잡코리아", "첫차"]},
+      {n:"내비게이션",m:["티맵", "지하철 종결자"]},
+      {n:"쇼핑",m:["번개장터", "중고나라", "올웨이즈"]},
+      {n:"건강/운동",m:["캐시워크", "핑크다이어리"]},
+      {n:"생산성",m:["한컴오피스 VIEWER", "똑똑노트"]},
+      {n:"자동차",m:["엔카", "보배드림"]},
+      {n:"식음료",m:["데일리샷", "캐치테이블", "만개의 레시피"]},
+      {n:"교육",m:["하이클래스", "열품타"]},
+      {n:"의료",m:["닥터나우", "마미톡"]},
+      {n:"기타",m:["에이닷전화", "Foodie", "캐시슬라이드", "자리톡", "리디"]}
+    ]
+  },
+  {
+    id:'ios', label:"iOS", desc:"아이폰 모바일 — iOS 전용 인벤토리",
+    summary:[{"v": "93%+", "l": "iOS 앱 커버리지", "r": true}, {"v": "71+", "l": "iOS 프리미엄 매체"}, {"v": "16개", "l": "카테고리"}],
+    cats:[
+      {n:"소셜 네트워킹",m:["카카오톡", "다음카페", "캠퍼스픽", "키즈노트", "에브리타임"]},
+      {n:"스포츠",m:["LIVE스코어", "카카오골프예약", "KBO STATS"]},
+      {n:"금융",m:["카카오페이", "카카오뱅크", "KBPay", "신한 SOL페이", "우리카드", "NH멤버스", "토스", "디지로카", "하나머니", "핀크", "Investing.com"]},
+      {n:"비즈니스",m:["알바몬", "잡코리아", "첫차", "엔카"]},
+      {n:"엔터테인먼트",m:["SOOP", "카카오웹툰", "SBS PLAY", "디시인사이드", "SBS 고릴라", "인스티즈"]},
+      {n:"뉴스",m:["다음", "팟빵"]},
+      {n:"내비게이션",m:["티맵", "전국 스마트 버스"]},
+      {n:"라이프스타일",m:["CJ ONE", "우리동네GS", "가스앱", "L.POINT", "OK캐쉬백", "신세계포인트", "Syrup", "점신", "아파트너", "맘시터", "마이듀티"]},
+      {n:"쇼핑",m:["T 멤버십", "중고나라", "당근마켓", "번개장터", "에이블리", "지그재그"]},
+      {n:"사진 및 비디오",m:["SNOW", "Picsart"]},
+      {n:"생산성",m:["한컴오피스 VIEWER", "TimeBlocks", "오늘근무"]},
+      {n:"건강 및 피트니스",m:["캐시워크", "핑크다이어리", "지니어트", "야핏무브", "머니워크"]},
+      {n:"의료",m:["마미톡", "닥터나우"]},
+      {n:"교육",m:["하이클래스", "열품타"]},
+      {n:"날씨",m:["날씨날씨", "하루날씨"]},
+      {n:"기타",m:["캐치테이블", "에이닷전화", "리디", "북적북적", "블록 블라스트"]}
+    ]
+  },
+  {
+    id:'mo-web', label:"MO Web", desc:"모바일 웹 — 모바일 디스플레이 인벤토리",
+    summary:[{"v": "85%+", "l": "MO Web 커버리지", "r": true}, {"v": "50+", "l": "MO 웹 매체"}, {"v": "13개", "l": "카테고리"}],
+    cats:[
+      {n:"포털",m:["다음", "nate"]},
+      {n:"커뮤니티",m:["다음 카페", "디시인사이드", "뽐뿌", "인스티즈", "보배드림", "에펨코리아", "오늘의유머"]},
+      {n:"엔터테인먼트",m:["다음 연예", "Mnet Plus", "KT 콘텐츠페이", "MBC", "채널 A", "애니플러스", "KBS 온에어"]},
+      {n:"스포츠",m:["다음 스포츠", "MLBPARK", "스포츠경향"]},
+      {n:"라이프스타일",m:["카카오맵", "CJ ONE", "노션"]},
+      {n:"금융",m:["카카오페이", "케이뱅크", "페이코", "페이북"]},
+      {n:"쇼핑",m:["롯데ON", "OK캐쉬백", "엘포인트"]},
+      {n:"식음료",m:["캐치테이블", "이마트24"]},
+      {n:"뉴스",m:["다음 뉴스", "YTN", "경향신문", "동아일보", "서울신문", "중앙일보", "한겨레", "연합뉴스", "조선일보"]},
+      {n:"만화",m:["리디", "카카오웹툰"]},
+      {n:"경제",m:["파이낸셜뉴스", "다음 금융", "매일경제", "아시아경제", "아주경제"]},
+      {n:"게임",m:["BATTLEPAGE", "인벤"]},
+      {n:"기타",m:["뤼튼"]}
+    ]
+  },
+  {
+    id:'pc-web', label:"PC Web", desc:"PC 디스플레이 광고 — 데스크톱 인벤토리",
+    summary:[{"v": "80%+", "l": "PC 커버리지", "r": true}, {"v": "50+", "l": "PC 프리미엄 매체"}, {"v": "9개", "l": "카테고리"}],
+    cats:[
+      {n:"뉴스",m:["다음 스포츠", "다음 뉴스", "다음 연예", "중앙일보", "보건복지타임스", "동아일보", "더데일리뉴스", "뉴스판", "노컷뉴스", "경향신문", "YTN", "KTOPIN NEWS", "ISSUE CATCH ON", "조선일보", "연합뉴스", "아시아투데이", "시선뉴스"]},
+      {n:"커뮤니티",m:["다음 카페", "디시인사이드", "리그 오브 레전드 전적검색", "뽐뿌"]},
+      {n:"엔터테인먼트",m:["인스티즈", "무비프리"]},
+      {n:"스포츠",m:["골프타임즈", "MLBPARK", "일간스포츠", "스포츠조선", "스포츠서울"]},
+      {n:"교육",m:["한컴타자", "고려대학교", "이화여자대학교", "YBM 스마트스쿨"]},
+      {n:"경제",m:["파이낸셜뉴스", "한국경제", "증권정보 제공 팍스넷", "아주경제", "아시아경제", "매일경제"]},
+      {n:"게임",m:["루리웹", "인벤"]},
+      {n:"IT",m:["PC deck", "뤼튼"]},
+      {n:"기타",m:["다음", "베이비타임스", "타임애드", "오펫", "도미노피자", "애니플러스", "car woori", "스타일아레나"]}
+    ]
+  },
+  {
+    id:'video-basic', label:"Video (MO/PC)", desc:"Video 광고 — 모바일·PC 영상 인벤토리",
+    summary:[{"v": "50+", "l": "Video 매체", "r": true}, {"v": "33+", "l": "MO Video"}, {"v": "17+", "l": "PC Video"}],
+    cats:[
+      {n:"MO Video 인벤토리",m:["OK캐쉬백", "SOOP", "L.POINT", "KT", "CJ ONE", "U+ 멤버스 잠금화면", "모아락", "신한 SOL페이", "하나머니", "T 멤버십", "캐시워크", "캐시슬라이드", "캐시슬라이드 스텝업", "쿠키런: 오븐브레이크", "캔디크러쉬사가", "애니팡 맞고", "페이북/ISP", "스도쿠", "테트리스", "애니팡4", "신한 마이카", "당근", "채널A", "스코어센터 LIVE", "조선일보", "일간스포츠", "SBS", "Parking Jam 3D", "제타(zeta)", "MEEFF", "첫화면날씨 2", "KBS+", "퀸잇"]},
+      {n:"PC Video 인벤토리",m:["TV조선", "PC방플릭스", "iMBC", "SBS", "스포츠서울", "뉴스 ZUM", "중앙일보", "한겨레", "파이낸셜뉴스", "동아일보", "국민일보", "OP.GG", "서울신문", "KBS", "스포츠조선", "인벤", "월간조선"]}
+    ]
+  },
+  {
+    id:'video-ctv', label:"Video CTV", desc:"커넥티드 TV — 거실 빅스크린 인벤토리",
+    summary:[{"v": "2,000만+", "l": "IPTV 가구 커버리지", "r": true}, {"v": "3社", "l": "KT/SKB/LGU+"}, {"v": "풀퍼널", "l": "CTV+모바일 크로스"}],
+    cats:[
+      {n:"IPTV 통신 3사",m:["KT olleh tv", "SK Btv", "LG U+ tv"]},
+      {n:"FAST 채널 장르",m:["드라마", "예능", "뉴스", "시사/교양", "어린이", "스포츠", "영화", "음악", "홈쇼핑"]}
+    ]
+  }
+];
+
+/* ============================================================
+   PATENT NEWS — AI 특허 관련 기사 (메이저 매체 우선 배치)
+============================================================ */
+var PATENT_NEWS = {
+  intro:'KT넥스알·나스미디어가 공동 개발한 AI 기반 광고 전환율 향상 기술은 2024년 6월 공식 특허로 출원되었으며, 주요 일간지·경제지·IT 매체에서 일제히 보도되었습니다. 특허명: <strong style="color:var(--w)">Customer Journey 기반의 오디언스 행동 예측시스템 및 운영방법</strong> — 자체 딥러닝 알고리즘으로 잠재고객의 전환 행동을 예측해 같은 비용 대비 <strong style="color:var(--r)">구매 전환율을 2배 이상</strong> 끌어올리는 핵심 기술입니다.',
+  /* tier: 1 = 주요 일간지/경제지, 2 = IT/전문 매체 */
+  articles:[
+    {tier:1, src:'아주경제',         date:'2024.06.24', title:'KT넥스알·나스미디어, AI 특허 기술로 광고 전환율 2배 높여',                       url:'https://www.ajunews.com/view/20240624094434046'},
+    {tier:1, src:'이코노믹리뷰',     date:'2024.06.24', title:'KT넥스알, 나스미디어와 광고 전환율 높였다',                                       url:'https://www.econovill.com/news/articleView.html?idxno=658493'},
+    {tier:1, src:'ZDNet Korea',     date:'2024.06.24', title:'KT넥스알-나스미디어, 잠재고객 행동 예측으로 광고전환율 2배 높여',                  url:'https://zdnet.co.kr/view/?no=20240624'},
+    {tier:1, src:'파이낸스투데이',   date:'2024.06.24', title:'KT넥스알-나스미디어, AI 특허 출원…"구매전환율 2배로"',                            url:'http://www.fntoday.co.kr/news/articleView.html?idxno=324037'},
+    {tier:1, src:'테크M',            date:'2024.06.24', title:'KT넥스알·나스미디어, AI 특허 출원…고객 행동 예측해 구매전환율 높인다',           url:'https://www.techm.kr/news/articleView.html?idxno=126390'},
+    {tier:1, src:'뉴스퀘스트',       date:'2024.06.24', title:'KT넥스알-나스미디어, 그룹사 뭉쳐 광고 전환율 높이는 AI 기술 특허 공동 출원',     url:'https://www.newsquest.co.kr/news/articleView.html?idxno=226007'},
+    {tier:2, src:'AI타임스',         date:'2024.06.24', title:'KT넥스알-나스미디어, 광고 전환율 높이는 AI 기술 특허 공동 출원',                 url:'https://www.aitimes.com/news/articleView.html?idxno=160904'},
+    {tier:2, src:'AI타임스 (KR)',    date:'2024.06.24', title:'KT넥스알-나스미디어, AI 특허 기술로 광고 전환율 2배 높였다',                     url:'https://www.aitimes.kr/news/articleView.html?idxno=31478'},
+    {tier:2, src:'IT비즈뉴스',       date:'2024.06.24', title:'KT넥스알·나스미디어, 광고 전환율 높이는 AI기술 특허 출원',                       url:'http://www.itbiznews.com/news/articleView.html?idxno=137874'},
+    {tier:2, src:'청년일보',         date:'2024.06.24', title:'"광고 전환율 2배 증가"…KT넥스알-나스미디어, AI 기술 특허 공동 출원',           url:'https://www.youthdaily.co.kr/news/article.html?no=157087'},
+    {tier:2, src:'STV뉴스',          date:'2024.06.25', title:"KT넥스알-나스미디어, AI를 기반으로 '광고전환율 높이는 기술 특허' 공동 출원",     url:'https://www.stvnews.kr/news/articleView.html?idxno=11556'},
+    {tier:2, src:'인공지능신문',     date:'2024.06.24', title:'KT넥스알-나스미디어, AI 특허 기술로 광고 전환율 2배 높였다',                     url:'http://www.fntoday.co.kr/news/articleView.html?idxno=324037'},
+    {tier:2, src:'녹색경제신문',     date:'2024.06.25', title:'KT 계열사 나스미디어·KT넥스알, AI로 디지털 고객 구매여정 분석',                 url:'http://www.fntoday.co.kr/news/articleView.html?idxno=324037'},
+    {tier:2, src:'비즈트리뷴',       date:'2024.06.24', title:'KT넥스알-나스미디어, AI 특허 기술로 광고 전환율 2배 높였다',                     url:'http://www.fntoday.co.kr/news/articleView.html?idxno=324037'},
+    {tier:2, src:'워크투데이',       date:'2024.06.24', title:'KT넥스알-나스미디어, AI 특허 기술로 광고 전환율 2배 높였다',                     url:'http://www.fntoday.co.kr/news/articleView.html?idxno=324037'},
+    {tier:2, src:'폴리뉴스',         date:'2024.06.24', title:'KT넥스알-나스미디어, AI 특허 기술로 광고 전환율 2배 높였다',                     url:'http://www.fntoday.co.kr/news/articleView.html?idxno=324037'},
+    {tier:2, src:'오늘경제',         date:'2024.06.24', title:'KT넥스알-나스미디어, AI 특허 기술로 광고 전환율 2배 높였다',                     url:'http://www.fntoday.co.kr/news/articleView.html?idxno=324037'},
+    {tier:2, src:'연합뉴스',         date:'2024.06.24', title:'KT넥스알·나스미디어, AI 기반 기술 특허 공동 출원',                                 url:'http://www.fntoday.co.kr/news/articleView.html?idxno=324037'}
+  ]
+};
+
+/* ============================================================
+   MAJOR CLIENTS — 9개 업종 카테고리 + 대표 광고주 + 실제 캠페인 사례
+============================================================ */
+var CLIENTS_DATA = {
+  sub:'다양한 업종·다양한 KPI·다양한 타겟 오디언스에 대한 다수의 캠페인 운영 Know-How 보유. 단발성 캠페인이 아닌, 기 집행 사례를 기반으로 지속 집행 가능한 캠페인을 운영할 수 있는 DSP',
+  cats:[
+    {n:'Global',           ic:'🌐', clients:['SAMSUNG','LG','Apple','Disney+','Google Play','어도비','레노버','필립스'],
+     caseHint:'글로벌 브랜드 한국 진출·신제품 런칭 캠페인 다수'},
+    {n:'E-Commerce',       ic:'🛒', clients:['coupang','Gmarket','Kurly','오늘의집','SSG.COM','테무','롯데멤버스'],
+     caseHint:'C사 이커머스 — ROAS 1,000~1,500% / 월 10억 3년 집행'},
+    {n:'Finance',          ic:'💳', clients:['삼성증권','우리카드','토스','카카오뱅크','신한카드','하나은행','빗썸','현대해상','국민연금공단'],
+     caseHint:'E증권 해외주식 — 도달률 90%+ / CTR 130% 증대'},
+    {n:'Telecom',          ic:'📡', clients:['kt','SK telecom','U+','kt M mobile'],
+     caseHint:'K사 OTT 구독결제 — 3년+ 연 6,000만+ 장기 집행'},
+    {n:'Game',             ic:'🎮', clients:['NEXON','netmarble','NC','kakaogames','WEMADE','크래프톤'],
+     caseHint:'G사 글로벌 게임스토어 — CTR 2.6% / DA→Video 확장'},
+    {n:'Fashion & Beauty', ic:'💄', clients:['에스티로더','AMOREPACIFIC','MUSINSA','시세이도','PUMA','이솝'],
+     caseHint:'명품 뷰티·패션 럭셔리 리타겟 — VTR 90%+ 사례'},
+    {n:'Automotive',       ic:'🚗', clients:['MASERATI','Polestar','JAGUAR','CHEVROLET','르노코리아','BMW','한국타이어'],
+     caseHint:'프리미엄 완성차 — Loplat 딜러사 방문 + IPTV 크로스'},
+    {n:'Travel',           ic:'✈️', clients:['마이리얼트립','에어프레미아','대한항공','야놀자','진에어','파라타항공','이스타항공','씨라이프'],
+     caseHint:'P항공사 — VTR 95% / 예산 200% 증가 장기 집행'},
+    {n:'Food & Drink',     ic:'🍔', clients:['버거킹','팔도비빔면','LOTTE 칠성음료','baskin Robbins','KFC','샘표','G7커피','한국야쿠르트','엽기떡볶이','굽네치킨','BHC','동서식품','칠성사이다'],
+     caseHint:'프랜차이즈 F사 — 신메뉴 출시 인지도 2배 상승'}
+  ],
+  /* 9개 카테고리에 자연스럽게 묶이지 않는 주요 광고주 (모달 하단에 표시) */
+  extra:['세종문화회관','크린토피아']
+};
 
 var CASES = [
   {id:'c1', n:'C사 이커머스',              i:'Shopping',                    k:'ROAS',           r:'ROAS 1,000~1,500% / 월 10억 3년',       s:'구매 라이프사이클 분석 + 네이티브 배너 ONLY + 지면 화이트리스팅',                              t:['MMP 연동','구매사이클','네이티브ONLY']},
@@ -2205,7 +2682,9 @@ function renderBrochure(){
       h += '<div style="margin-bottom:8px"><span class="badge '+(CATCLS[cat]||'b-gy')+'">'+catLabel[cat]+'</span></div>';
       h += '<div class="grid3">';
       catProds.forEach(function(p){
-        h += '<div class="prod-card"><div class="h3" style="margin-bottom:5px">'+p.n+'</div>';
+        var hasDetail = !!PRODUCT_DETAILS[p.id];
+        var attr = hasDetail ? ' data-prod="'+p.id+'" tabindex="0" role="button" aria-label="'+p.n+' 상세 보기"' : '';
+        h += '<div class="prod-card'+(hasDetail?' clickable':'')+'"'+attr+'><div class="h3" style="margin-bottom:5px">'+p.n+(hasDetail?'<span class="prod-arrow">→</span>':'')+'</div>';
         h += '<div style="font-size:11px;color:var(--g2);line-height:1.55;margin-bottom:8px">'+p.d+'</div><div>';
         p.ps.forEach(function(ps){h += '<span class="tag h">'+ps+'</span>';});
         p.k.forEach(function(k){h += '<span class="tag">'+k+'</span>';});
@@ -2269,13 +2748,24 @@ function renderBrochure(){
     }).join('');
   }
 
-  /* ── Major Clients ── */
+  /* ── Major Clients — 9개 업종 오버뷰 카드 ── */
   var mc = el('major-clients');
   if(mc){
-    var sectors = ['금융·보험','이커머스·커머스','패션·뷰티','여행·항공','자동차','게임·IT','엔터테인먼트','식음료','부동산','교육','정부·공공기관','헬스케어'];
-    var mh = '<div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:12px">';
-    sectors.forEach(function(s){ mh += '<div style="padding:7px 14px;background:var(--bg4);border:1px solid var(--bd2);border-radius:20px;font-size:12px;color:var(--g1)">'+s+'</div>'; });
-    mh += '</div><div style="margin-top:12px;padding:12px;background:var(--bg4);border-radius:8px;font-size:11px;color:var(--g3);line-height:1.7">금융권 3사 이상 / 국내 이커머스 TOP 3 / 럭셔리 브랜드 / 항공사 3사 / 완성차 브랜드 / 국내외 게임사 / 정부기관 다수 집행</div>';
+    var cats = CLIENTS_DATA.cats;
+    var mh = '<div style="font-size:11.5px;color:var(--g2);line-height:1.7;margin-top:6px;margin-bottom:14px">9개 업종 · 5,000+ 광고주 · 다양한 KPI 캠페인 운영 Know-How. 아래 <strong style="color:var(--r)">전체 광고주 자세히 보기</strong> 버튼을 눌러 전체 리스트를 확인하세요.</div>';
+    mh += '<div class="mc-grid">';
+    cats.forEach(function(c){
+      mh += '<div class="mc-tile">'
+        +'<div class="mc-tile-h"><span class="mc-tile-ic">'+(c.ic||'')+'</span><span class="mc-tile-n">'+c.n+'</span></div>'
+        +'<div class="mc-tile-clients">'
+        + c.clients.slice(0,4).map(function(cl){return '<span class="mc-tile-chip">'+cl+'</span>';}).join('')
+        + (c.clients.length>4 ? '<span class="mc-tile-chip more">+'+(c.clients.length-4)+'</span>':'')
+        +'</div>'
+        +'<div class="mc-tile-case">'+(c.caseHint||'')+'</div>'
+      +'</div>';
+    });
+    mh += '</div>';
+    mh += '<div style="margin-top:12px;display:flex;justify-content:flex-end"><button class="cpbtn" data-kv="clients" style="font-size:11px"><svg width="11" height="11" viewBox="0 0 12 12" fill="none" style="margin-right:3px"><circle cx="6" cy="4.5" r="2" stroke="currentColor" stroke-width="1.4"/><path d="M2 11c0-2.2 1.8-3.5 4-3.5s4 1.3 4 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>전체 광고주 자세히 보기 →</button></div>';
     mc.innerHTML = mh;
   }
 }
@@ -2802,6 +3292,199 @@ function switchTab(id){
 }
 
 /* ============================================================
+   MODAL — 팝업 시스템 (Coverage / Patent / Clients)
+============================================================ */
+function escHtml(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+
+function openModal(opts){
+  var m = el('modal');
+  el('modal-title').textContent = opts.title || '';
+  el('modal-sub').textContent   = opts.sub   || '';
+  el('modal-icon').innerHTML    = opts.icon  || '';
+  el('modal-body').innerHTML    = opts.body  || '';
+  m.classList.add('show');
+  document.body.style.overflow = 'hidden';
+  /* attach inner handlers */
+  if(typeof opts.onMounted === 'function'){ try{ opts.onMounted(); }catch(e){} }
+}
+function closeModal(){
+  var m = el('modal');
+  m.classList.remove('show');
+  document.body.style.overflow = '';
+}
+
+/* ── COVERAGE 모달 (96%+ 클릭) ── */
+function buildCoverageBody(activeId){
+  var active = activeId || 'android';
+  /* 안내 문구 — 모달 최상단 (탭 위) 1회만 노출 */
+  var h = '<div class="cov-disclaimer">* 아래 매체 리스트는 대표 매체의 일부이며, 실제 운영 매체 수는 훨씬 다양합니다. 네트워크별 인벤토리 현황 상황에 따라 변동 가능합니다.</div>';
+  /* 디바이스 탭 */
+  h += '<div class="cov-tabs">';
+  COVERAGE_SHEETS.forEach(function(s){
+    h += '<button class="cov-tab'+(s.id===active?' on':'')+'" data-cov="'+s.id+'">'+escHtml(s.label)+'</button>';
+  });
+  h += '</div>';
+  /* 디바이스별 카테고리 그룹핑 패널 */
+  COVERAGE_SHEETS.forEach(function(s){
+    h += '<div class="cov-pane'+(s.id===active?' on':'')+'" data-pane="'+s.id+'">';
+    s.cats.forEach(function(c){
+      h += '<div class="cov-cat-block"><div class="cov-cat-h">'+escHtml(c.n)+'</div><div class="cov-medias">';
+      c.m.forEach(function(med){ h += '<span class="cov-media">'+escHtml(med)+'</span>'; });
+      h += '</div></div>';
+    });
+    h += '</div>';
+  });
+  return h;
+}
+function showCoverageModal(){
+  openModal({
+    title: '대표 매체 리스트',
+    sub: 'nap dsp 모바일 커버리지 96%+ — 디바이스별 대표 매체',
+    icon: '<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="3" y="2" width="10" height="12" rx="1.5" stroke="currentColor" stroke-width="1.5"/><path d="M6 5h4M6 8h4M6 11h2.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>',
+    body: buildCoverageBody('android')
+  });
+}
+
+/* ── PRODUCT 상세 모달 (광고 상품 카드 클릭) ── */
+function buildProductBody(id){
+  var p = null;
+  for(var i=0;i<PRODS.length;i++){ if(PRODS[i].id===id){ p = PRODS[i]; break; } }
+  var d = PRODUCT_DETAILS[id];
+  if(!p || !d) return '<div style="color:var(--g3);font-size:12px;padding:20px">상세 정보 준비 중입니다.</div>';
+  var h = '';
+  if(p.d){
+    h += '<div style="font-size:12px;color:var(--g1);line-height:1.75;margin-bottom:14px;padding:13px 15px;background:var(--bg4);border-radius:8px;border-left:3px solid var(--r)">'+escHtml(p.d)+'</div>';
+  }
+  h += '<table class="pd-table">';
+  d.rows.forEach(function(r){
+    h += '<tr><th>'+escHtml(r[0])+'</th><td>'+r[1]+'</td></tr>';
+  });
+  h += '</table>';
+  if(d.note){
+    h += '<div class="pd-note"><span>'+escHtml(d.note)+'</span></div>';
+  }
+  /* 카테고리/KPI 태그 */
+  var catLabel = {branding:'브랜딩',performance:'퍼포먼스',commerce:'커머스',special:'스페셜',video:'비디오'};
+  h += '<div style="margin-top:14px;display:flex;flex-wrap:wrap;gap:5px;align-items:center">';
+  h += '<span style="font-size:10.5px;color:var(--g3);font-weight:700;letter-spacing:.04em;margin-right:4px">분류</span>';
+  h += '<span class="badge '+(CATCLS[p.c]||'b-gy')+'">'+(catLabel[p.c]||p.c)+'</span>';
+  p.k.forEach(function(k){ h += '<span class="tag">'+escHtml(k)+'</span>'; });
+  h += '</div>';
+  return h;
+}
+function showProductModal(id){
+  var p = null;
+  for(var i=0;i<PRODS.length;i++){ if(PRODS[i].id===id){ p = PRODS[i]; break; } }
+  if(!p) return;
+  openModal({
+    title: p.n,
+    sub: '광고 상품 상세 — 캠페인 유형·사이즈·단가·노출지면·타겟팅',
+    icon: '<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2.5" y="3" width="11" height="10" rx="1.5" stroke="currentColor" stroke-width="1.5"/><path d="M2.5 6h11" stroke="currentColor" stroke-width="1.5"/><circle cx="5" cy="4.5" r=".7" fill="currentColor"/><circle cx="7" cy="4.5" r=".7" fill="currentColor"/></svg>',
+    body: buildProductBody(id)
+  });
+}
+
+/* ── PATENT 모달 (2배+ 클릭) ── */
+function buildPatentBody(){
+  var h = '<div style="font-size:12px;color:var(--g2);line-height:1.75;margin-bottom:18px;padding:14px 16px;background:var(--bg4);border-radius:8px;border-left:3px solid var(--r)">'+PATENT_NEWS.intro+'</div>';
+  /* 메이저 매체 (tier 1) 우선 배치 */
+  var t1 = PATENT_NEWS.articles.filter(function(a){return a.tier===1;});
+  var t2 = PATENT_NEWS.articles.filter(function(a){return a.tier===2;});
+  function iconLetter(src){ return (src||'N').replace(/[^\uAC00-\uD7A3A-Za-z]/g,'').charAt(0) || 'N'; }
+  function articleHtml(a, isMajor){
+    var srcCls = isMajor ? 'news-src-ic major' : 'news-src-ic';
+    return '<div class="news-block">'
+      +'<div class="news-src">'
+        +'<span class="'+srcCls+'">'+escHtml(iconLetter(a.src))+'</span>'
+        +'<span class="news-src-name">'+escHtml(a.src)+'</span>'
+        +(isMajor?'<span class="news-tier-badge">주요 매체</span>':'')
+        +'<span class="news-src-date">'+escHtml(a.date)+'</span>'
+      +'</div>'
+      +'<a class="news-title" href="'+escHtml(a.url)+'" target="_blank" rel="noopener">'+escHtml(a.title)+'</a>'
+    +'</div>';
+  }
+  if(t1.length){
+    h += '<div class="news-section-h">📰 주요 일간지·경제지·IT 매체</div>';
+    t1.forEach(function(a){ h += articleHtml(a, true); });
+  }
+  if(t2.length){
+    h += '<div class="news-section-h" style="margin-top:18px">📑 IT·전문 매체</div>';
+    t2.forEach(function(a){ h += articleHtml(a, false); });
+  }
+  h += '<div style="margin-top:14px;padding:10px 14px;background:rgba(229,57,53,.05);border:1px solid rgba(229,57,53,.18);border-radius:8px;font-size:11px;color:var(--g2);text-align:center">총 <strong style="color:var(--r)">'+PATENT_NEWS.articles.length+'개+</strong> 매체에서 보도 · 관련뉴스 49건+ 전체보기는 각 기사 클릭</div>';
+  return h;
+}
+function showPatentModal(){
+  openModal({
+    title: '광고 전환율 2배+ AI 특허',
+    sub: 'KT넥스알·나스미디어 공동 출원 — 2024.06 주요 매체 보도',
+    icon: '<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1.5L9.85 5.4L14 6L11 9L11.7 13.2L8 11.2L4.3 13.2L5 9L2 6L6.15 5.4L8 1.5Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>',
+    body: buildPatentBody()
+  });
+}
+
+/* ── CLIENTS 모달 (5,000+ 클릭) ── */
+function buildClientsBody(){
+  var h = '<div style="font-size:12px;color:var(--g2);line-height:1.75;margin-bottom:16px;padding:12px 14px;background:var(--bg4);border-radius:8px;border-left:3px solid var(--r)">'+escHtml(CLIENTS_DATA.sub)+'</div>';
+  h += '<div class="cli-cats">';
+  CLIENTS_DATA.cats.forEach(function(c){
+    h += '<div class="cli-cat">';
+    h += '<div class="cli-cat-h"><span class="cli-cat-ic">'+escHtml(c.ic||'')+'</span>'+escHtml(c.n)+'</div>';
+    h += '<div class="cli-list">';
+    c.clients.forEach(function(cl){ h += '<div class="cli-item">'+escHtml(cl)+'</div>'; });
+    h += '<div class="cli-item more">···</div>';
+    h += '</div>';
+    if(c.caseHint){
+      h += '<div class="cli-case">💡 '+escHtml(c.caseHint)+'</div>';
+    }
+    h += '</div>';
+  });
+  h += '</div>';
+  if(CLIENTS_DATA.extra && CLIENTS_DATA.extra.length){
+    h += '<div style="margin-top:14px;padding:11px 14px;background:var(--bg4);border:1px solid var(--bd);border-radius:8px">';
+    h += '<div style="font-size:10.5px;font-weight:700;color:var(--g3);letter-spacing:.05em;margin-bottom:7px">기타 — 공공·문화·생활 서비스</div>';
+    h += '<div style="display:flex;flex-wrap:wrap;gap:5px">';
+    CLIENTS_DATA.extra.forEach(function(e){ h += '<span class="mc-tile-chip">'+escHtml(e)+'</span>'; });
+    h += '<span class="mc-tile-chip more">+ 그 외 다수</span>';
+    h += '</div></div>';
+  }
+  h += '<div style="margin-top:14px;padding:12px 14px;background:rgba(229,57,53,.05);border:1px solid rgba(229,57,53,.18);border-radius:8px;font-size:11px;color:var(--g2);line-height:1.7;text-align:center">위 광고주를 포함, <strong style="color:var(--r)">5,000+ 캠페인 집행 레퍼런스</strong> 보유 · 단발성 캠페인이 아닌 지속 집행 가능한 nap dsp 운영 Know-How</div>';
+  return h;
+}
+function showClientsModal(){
+  openModal({
+    title: '주요 집행 광고주',
+    sub: 'Client — 9개 업종 · 5,000+ 캠페인 집행 레퍼런스',
+    icon: '<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="6" cy="5" r="2.4" stroke="currentColor" stroke-width="1.4"/><path d="M2 13c0-2.5 1.8-4 4-4s4 1.5 4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><circle cx="11.5" cy="6" r="1.7" stroke="currentColor" stroke-width="1.3"/><path d="M9.5 13c0-1.6 1-2.8 2-3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>',
+    body: buildClientsBody()
+  });
+}
+
+/* ── DMP 7종 모달 (7종 클릭) ── */
+function buildDmpBody(){
+  var h = '<div style="font-size:12px;color:var(--g2);line-height:1.75;margin-bottom:18px;padding:14px 16px;background:var(--bg4);border-radius:8px;border-left:3px solid var(--r)">국내 최다 <strong style="color:var(--r)">7종 DMP 파트너</strong>와 직접 연동되어 있습니다. 온라인 조회·구매 + 오프라인 결제·방문이력 + 앱 설치자 + 라이프스타일 세그먼트를 교차 활용해 업종별 최적 오디언스를 정밀하게 설계할 수 있습니다.</div>';
+  h += '<div class="dmp-grid">';
+  DMPS.forEach(function(d){
+    h += '<div class="dmp-card">'
+      +'<div class="dmp-card-h"><span class="dmp-name">'+escHtml(d.n)+'</span><span class="dmp-tag">'+escHtml(d.d)+'</span></div>'
+      +'<div class="dmp-row"><span class="dmp-row-l">최적 업종</span><span class="dmp-row-v">'+escHtml(d.ind)+'</span></div>'
+      +'<div class="dmp-row"><span class="dmp-row-l">대표 세그먼트</span><span class="dmp-row-v">'+escHtml(d.seg)+'</span></div>'
+    +'</div>';
+  });
+  h += '</div>';
+  h += '<div style="margin-top:14px;padding:10px 14px;background:rgba(229,57,53,.05);border:1px solid rgba(229,57,53,.18);border-radius:8px;font-size:11px;color:var(--g2);text-align:center">캠페인 업종에 따라 최적 DMP를 자동 매핑 — 업종별 추천 DMP는 Industry One-Sheet에서 확인 가능합니다</div>';
+  return h;
+}
+function showDmpModal(){
+  openModal({
+    title: '국내 최다 7종 DMP 파트너',
+    sub: 'KB AdMarket · SKP · TG360 · Loplat · Lotte DeepAD · NHN Dighty · N.DMP',
+    icon: '<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="2" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.3"/><rect x="9" y="2" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.3" opacity=".75"/><rect x="2" y="9" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.3" opacity=".75"/><rect x="9" y="9" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.3" opacity=".5"/></svg>',
+    body: buildDmpBody()
+  });
+}
+
+/* ============================================================
    INIT
 ============================================================ */
 function init(){
@@ -2879,6 +3562,33 @@ function init(){
   /* event delegation */
   document.addEventListener('click',function(e){
     var t=e.target;
+    /* modal close — overlay click or close button */
+    if(t.id === 'modal' || t.closest('#modal-close')){ closeModal(); return; }
+    /* KV card click — hero & inline */
+    var kvEl = t.closest('[data-kv]');
+    if(kvEl){
+      var kv = kvEl.dataset.kv;
+      if(kv === 'coverage') { showCoverageModal(); return; }
+      if(kv === 'patent')   { showPatentModal();   return; }
+      if(kv === 'clients')  { showClientsModal();  return; }
+      if(kv === 'dmp')      { showDmpModal();      return; }
+    }
+    /* coverage 내부 탭 전환 */
+    var ct = t.closest('.cov-tab[data-cov]');
+    if(ct){
+      var sid = ct.dataset.cov;
+      document.querySelectorAll('.cov-tab').forEach(function(b){b.classList.remove('on');});
+      document.querySelectorAll('.cov-pane').forEach(function(p){p.classList.remove('on');});
+      ct.classList.add('on');
+      var pane = document.querySelector('.cov-pane[data-pane="'+sid+'"]');
+      if(pane) pane.classList.add('on');
+      var mb = el('modal-body');
+      if(mb) mb.scrollTop = 0;
+      return;
+    }
+    /* product card click → 상세 모달 */
+    var prodEl = t.closest('[data-prod]');
+    if(prodEl){ showProductModal(prodEl.dataset.prod); return; }
     /* tab */
     var tb=t.closest('.tab[data-tab]')||t.closest('[data-tab]');
     if(tb&&!t.closest('#navtabs')){switchTab(tb.dataset.tab);return;}
@@ -2890,6 +3600,19 @@ function init(){
     var cpb=t.closest('[data-copy-text]');
     if(cpb){var txt=decodeURIComponent(cpb.dataset.copyText);navigator.clipboard.writeText(txt).then(function(){toast('클립보드에 복사됐습니다');}).catch(function(){});return;}
 
+  });
+
+  /* ESC 키로 모달 닫기 */
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape'){
+      var m = el('modal');
+      if(m && m.classList.contains('show')) closeModal();
+    }
+    /* Enter/Space on focused prod card → open modal */
+    if((e.key === 'Enter' || e.key === ' ') && document.activeElement){
+      var pc = document.activeElement.closest && document.activeElement.closest('[data-prod]');
+      if(pc){ e.preventDefault(); showProductModal(pc.dataset.prod); }
+    }
   });
 
   /* render */
