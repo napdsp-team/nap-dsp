@@ -3842,26 +3842,26 @@ var SIM_PRODUCTS = {
      rates:[{max:Infinity,v:4400}], ctrFixed:0.0004, kpi:['Branding']}
   ],
   video_cpv: [
-    {id:'bl-va',    name:'Brand lift VA (CPVC)',    hint:'브랜드 리프트 영상 어텐션 · 20원',
-     rates:[{max:Infinity,v:20}], kpi:['Branding']},
-    {id:'bl-ctv',   name:'Brand lift CTV (CPV)',    hint:'CTV 브랜드 리프트 · 8원',
-     rates:[{max:Infinity,v:8}], kpi:['Branding']},
-    {id:'ctv-cpv',  name:'CTV (CPV)',               hint:'IPTV 통신3사 영상 · 15원',
-     rates:[{max:Infinity,v:15}], kpi:['Branding','UV확보']},
-    {id:'kpf-va',   name:'KPF VA (CPVC)',           hint:'카카오 파트너 영상 어텐션 · 16원',
-     rates:[{max:Infinity,v:16}], kpi:['Branding','UV확보']},
-    {id:'kpf-ctv',  name:'KPF CTV (CPV)',           hint:'카카오 파트너 CTV · 8원',
-     rates:[{max:Infinity,v:8}], kpi:['Branding']}
+    {id:'bl-va',    name:'Brand lift VA (CPVC)',    hint:'브랜드 리프트 영상 어텐션 · 20원 (조회+클릭 과금)',
+     rates:[{max:Infinity,v:20}], cpvc:true, kpi:['Branding']},
+    {id:'bl-ctv',   name:'Brand lift CTV (CPV)',    hint:'CTV 브랜드 리프트 · 8원 · VTR 99%',
+     rates:[{max:Infinity,v:8}], vtrFixed:0.99, noClick:true, kpi:['Branding']},
+    {id:'ctv-cpv',  name:'CTV (CPV)',               hint:'IPTV 통신3사 영상 · 15원 · VTR 99%',
+     rates:[{max:Infinity,v:15}], vtrFixed:0.99, noClick:true, kpi:['Branding','UV확보']},
+    {id:'kpf-va',   name:'KPF VA (CPVC)',           hint:'카카오 파트너 영상 어텐션 · 16원 (조회+클릭 과금)',
+     rates:[{max:Infinity,v:16}], cpvc:true, kpi:['Branding','UV확보']},
+    {id:'kpf-ctv',  name:'KPF CTV (CPV)',           hint:'카카오 파트너 CTV · 8원 · VTR 99%',
+     rates:[{max:Infinity,v:8}], vtrFixed:0.99, noClick:true, kpi:['Branding']}
   ],
   video_cpm: [
     {id:'bl-vcpm',  name:'Brand lift Video (CPM)',  hint:'브랜드 리프트 영상 CPM · 8,000원',
-     rates:[{max:Infinity,v:8000}], kpi:['Branding']},
-    {id:'ctv-cpm',  name:'CTV Video (CPM)',         hint:'IPTV CTV 영상 CPM · 8,000원',
-     rates:[{max:Infinity,v:8000}], kpi:['Branding','UV확보']},
+     rates:[{max:Infinity,v:8000}], noClick:true, kpi:['Branding']},
+    {id:'ctv-cpm',  name:'CTV Video (CPM)',         hint:'IPTV CTV 영상 CPM · 8,000원 · VTR 99%',
+     rates:[{max:Infinity,v:8000}], vtrFixed:0.99, noClick:true, kpi:['Branding','UV확보']},
     {id:'kpf-vcpm', name:'KPF Video (CPM)',         hint:'카카오 파트너 영상 CPM · 6,400원',
-     rates:[{max:Infinity,v:6400}], kpi:['Branding','UV확보']},
-    {id:'bumper',   name:'Bumper (CPM)',             hint:'5~7초 논스킵 범퍼팩 · 4,000원 · VTR 82.8%',
-     rates:[{max:Infinity,v:4000}], vtrFixed:0.828, cpvFixed:5, kpi:['Branding']}
+     rates:[{max:Infinity,v:6400}], noClick:true, kpi:['Branding','UV확보']},
+    {id:'bumper',   name:'Bumper (CPM)',             hint:'5~7초 논스킵 범퍼팩 · 4,000원 · 업종별 VTR',
+     rates:[{max:Infinity,v:4000}], vtrTable:'bumper', cpvFixed:5, noClick:true, kpi:['Branding']}
   ]
 };
 
@@ -3876,6 +3876,20 @@ var SIM_VTR = {
   '금융':0.7550,'단체/관공서':0.8490,'문화/예술':0.8240,'방송/통신서비스':0.8290,
   '생활용품':0.6560,'쇼핑몰':0.8180,'수송':0.8230,'식음료':0.8030,
   '의료/건강':0.8652,'주택/가구':0.7566,'패션/화장품':0.8445,'기타':0.8060
+};
+/* 비디오 상품 (CPM·CPVC·CPV) 업종별 평균 CTR */
+var SIM_VIDEO_CTR = {
+  '가전':0.0130,'게임':0.0188,'관광/레저/항공':0.0170,'교육':0.0110,
+  '금융':0.0270,'단체/관공서':0.0150,'문화/예술':0.0233,'방송/통신서비스':0.0105,
+  '생활용품':0.0340,'쇼핑몰':0.0200,'수송':0.0290,'식음료':0.0129,
+  '의료/건강':0.0120,'주택/가구':0.0148,'패션/화장품':0.0170,'기타':0.0180
+};
+/* 범퍼 상품 업종별 VTR (5~7초 논스킵) */
+var SIM_BUMPER_VTR = {
+  '가전':0.8280,'게임':0.8280,'관광/레저/항공':0.8280,'교육':0.8280,
+  '금융':0.8280,'단체/관공서':0.8726,'문화/예술':0.7826,'방송/통신서비스':0.7673,
+  '생활용품':0.8280,'쇼핑몰':0.8473,'수송':0.8280,'식음료':0.8615,
+  '의료/건강':0.8280,'주택/가구':0.8280,'패션/화장품':0.8280,'기타':0.8280
 };
 
 var SIM_TYPE_LABEL = {cpc:'CPC',cpm:'CPM',video_cpv:'CPV / CPVC',video_cpm:'Video CPM'};
@@ -4002,7 +4016,7 @@ function runSimulator(){
   var type=found.type, prod=found.prod;
   var rate=simGetRate(prod.rates,budget);
   var ctr=prod.ctrFixed||(SIM_CTR[ind]||0.038);
-  var vtr=prod.vtrFixed||(SIM_VTR[ind]||0.80);
+  var vtr=prod.vtrTable==='bumper'?(SIM_BUMPER_VTR[ind]||0.828):(prod.vtrFixed||(SIM_VTR[ind]||0.80));
 
   var imp=0,click=0,view=0;
   var formulaStr='';
@@ -4016,15 +4030,30 @@ function runSimulator(){
     click=imp*ctr;
     formulaStr='노출 = (예산 ÷ CPM) × 1,000 = ('+budget.toLocaleString()+'÷'+rate+') × 1,000 = '+Math.round(imp).toLocaleString()+'회\n클릭 = 노출('+Math.round(imp).toLocaleString()+') × CTR('+( ctr*100).toFixed(2)+'%) = '+Math.round(click).toLocaleString()+'건';
   } else if(type==='video_cpv'){
-    view=budget/rate;
-    imp=view/vtr;
-    formulaStr='조회수 = 예산('+budget.toLocaleString()+'원) ÷ CPV('+rate+'원) = '+Math.round(view).toLocaleString()+'회\n노출 = 조회수('+Math.round(view).toLocaleString()+') ÷ VTR('+( vtr*100).toFixed(1)+'%) = '+Math.round(imp).toLocaleString()+'회';
+    var vidCtr=SIM_VIDEO_CTR[ind]||0.018;
+    if(prod.cpvc){
+      // CPVC: budget per (view+click) event. CVTR = VTR + CTR
+      var cvtr=vtr+vidCtr;
+      var combined=budget/rate;
+      imp=combined/cvtr;
+      view=imp*vtr;
+      click=imp*vidCtr;
+      formulaStr='조회+클릭 = 예산('+budget.toLocaleString()+'원) ÷ CPVC('+rate+'원) = '+Math.round(combined).toLocaleString()+'건\n노출 = (조회+클릭) ÷ CVTR('+( cvtr*100).toFixed(2)+'%) = '+Math.round(imp).toLocaleString()+'회';
+    } else {
+      view=budget/rate;
+      imp=view/vtr;
+      click=prod.noClick?0:imp*vidCtr;
+      formulaStr='조회수 = 예산('+budget.toLocaleString()+'원) ÷ CPV('+rate+'원) = '+Math.round(view).toLocaleString()+'회\n노출 = 조회수('+Math.round(view).toLocaleString()+') ÷ VTR('+( vtr*100).toFixed(1)+'%) = '+Math.round(imp).toLocaleString()+'회';
+      if(!prod.noClick) formulaStr+='\n클릭 = 노출('+Math.round(imp).toLocaleString()+') × CTR('+( vidCtr*100).toFixed(2)+'%) = '+Math.round(click).toLocaleString()+'건';
+    }
     if(prod.cpvFixed) formulaStr+=' [범퍼: CPM '+simGetRate(prod.rates,budget).toLocaleString()+'원 기준 CPV ~'+prod.cpvFixed+'원]';
   } else if(type==='video_cpm'){
+    var vidCtr2=SIM_VIDEO_CTR[ind]||0.018;
     imp=(budget/rate)*1000;
     view=imp*vtr;
-    if(prod.vtrFixed) view=imp*prod.vtrFixed;
+    click=prod.noClick?0:imp*vidCtr2;
     formulaStr='노출 = (예산 ÷ CPM) × 1,000 = ('+budget.toLocaleString()+'÷'+rate+') × 1,000 = '+Math.round(imp).toLocaleString()+'회\n조회수 = 노출('+Math.round(imp).toLocaleString()+') × VTR('+( vtr*100).toFixed(1)+'%) = '+Math.round(view).toLocaleString()+'회';
+    if(!prod.noClick) formulaStr+='\n클릭 = 노출('+Math.round(imp).toLocaleString()+') × CTR('+( vidCtr2*100).toFixed(2)+'%) = '+Math.round(click).toLocaleString()+'건';
   }
 
   /* 추천 상품 계산 */
@@ -4040,7 +4069,19 @@ function runSimulator(){
   /* 해석 문구 */
   var isVideo=(type==='video_cpv'||type==='video_cpm');
   var interp=[];
-  var mainMetric=isVideo?('예상 조회수 약 '+simFmtNum(view)+'회 (VTR '+(vtr*100).toFixed(1)+'% 기준)'):('예상 클릭 약 '+simFmtNum(click)+'건, 노출 약 '+simFmtNum(imp)+'회 ('+(prod.ctrFixed?'상품 고정 CTR ':(ind+' 업종 평균 CTR '))+(ctr*100).toFixed(2)+'% 기준)');
+  var mainMetric;
+  if(isVideo){
+    if(prod.cpvc){
+      var _combined=view+click; var _cvtr=(imp>0)?((view+click)/imp):0;
+      mainMetric='예상 조회+클릭 약 '+simFmtNum(_combined)+'건, 노출 약 '+simFmtNum(imp)+'회 (CVTR '+(_cvtr*100).toFixed(2)+'% 기준)';
+    } else if(prod.noClick){
+      mainMetric='예상 조회수 약 '+simFmtNum(view)+'회 (VTR '+(vtr*100).toFixed(1)+'% 기준 · CTV 클릭 없음)';
+    } else {
+      mainMetric='예상 조회수 약 '+simFmtNum(view)+'회 (VTR '+(vtr*100).toFixed(1)+'% 기준)';
+    }
+  } else {
+    mainMetric='예상 클릭 약 '+simFmtNum(click)+'건, 노출 약 '+simFmtNum(imp)+'회 ('+(prod.ctrFixed?'상품 고정 CTR ':(ind+' 업종 평균 CTR '))+(ctr*100).toFixed(2)+'% 기준)';
+  }
   interp.push(mainMetric);
   if(budget>=50000000) interp.push('예산이 5천만원 이상이므로 최저 할인 단가('+rate.toLocaleString()+'원)가 적용되었습니다.');
   else if(budget>=30000000) interp.push('예산이 3천만원 이상이므로 할인 단가('+rate.toLocaleString()+'원)가 적용되었습니다.');
@@ -4051,7 +4092,16 @@ function runSimulator(){
   /* 복사용 텍스트 */
   var copyText = '[nap dsp 성과 예측]\n상품: '+prod.name+' / 업종: '+ind+' / KPI: '+kpi+'\n예산: '+budget.toLocaleString()+'원 / 적용 단가: '+rate.toLocaleString()+'원\n\n예상 노출: '+Math.round(imp).toLocaleString()+'회';
   if(!isVideo) copyText+='\n예상 클릭: '+Math.round(click).toLocaleString()+'건\nCTR: '+(ctr*100).toFixed(2)+'%';
-  else copyText+='\n예상 조회: '+Math.round(view).toLocaleString()+'회\nVTR: '+(vtr*100).toFixed(1)+'%';
+  else {
+    if(prod.cpvc){
+      var _comb=view+click; var _cvtr3=(imp>0)?((view+click)/imp):0;
+      copyText+='\n예상 조회+클릭: '+Math.round(_comb).toLocaleString()+'건\nCVTR: '+(_cvtr3*100).toFixed(2)+'%';
+    } else if(prod.noClick){
+      copyText+='\n예상 조회: '+Math.round(view).toLocaleString()+'회\nVTR: '+(vtr*100).toFixed(1)+'% (CTV · 클릭 없음)';
+    } else {
+      copyText+='\n예상 조회: '+Math.round(view).toLocaleString()+'회\nVTR: '+(vtr*100).toFixed(1)+'%\n예상 클릭: '+Math.round(click).toLocaleString()+'건\nCTR: '+((SIM_VIDEO_CTR[ind]||0.018)*100).toFixed(2)+'%';
+    }
+  }
   copyText+='\n\n'+formulaStr+'\n\n해석: '+interp.join(' / ');
 
   var typeBadge=SIM_TYPE_BADGE[type];
@@ -4071,20 +4121,38 @@ function runSimulator(){
 
   /* Forecast Metrics */
   h+='<div class="out-sec"><div class="out-sec-t">Forecast Metrics</div>';
-  h+='<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">';
+  var ncols=(isVideo&&!prod.noClick&&!prod.cpvc)?4:3; h+='<div style="display:grid;grid-template-columns:repeat('+ncols+',1fr);gap:8px">';
   h+='<div style="background:var(--bg4);border-radius:8px;padding:12px;border:1px solid var(--bd);text-align:center"><div style="font-size:9px;color:var(--g3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px">예상 노출</div><div style="font-size:20px;font-weight:700;color:var(--w)">'+simFmtNum(imp)+'</div><div style="font-size:10px;color:var(--g3)">회</div></div>';
   if(!isVideo){
     h+='<div style="background:rgba(229,57,53,.06);border-radius:8px;padding:12px;border:1px solid rgba(229,57,53,.2);text-align:center"><div style="font-size:9px;color:var(--r);text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px">예상 클릭</div><div style="font-size:20px;font-weight:700;color:var(--w)">'+simFmtNum(click)+'</div><div style="font-size:10px;color:var(--g3)">건</div></div>';
     h+='<div style="background:var(--bg4);border-radius:8px;padding:12px;border:1px solid var(--bd);text-align:center"><div style="font-size:9px;color:var(--g3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px">예상 CTR</div><div style="font-size:20px;font-weight:700;color:var(--w)">'+(ctr*100).toFixed(2)+'</div><div style="font-size:10px;color:var(--g3)">%</div></div>';
-  } else {
+  } else if(prod.cpvc){
+    /* CPVC: 조회+클릭 통합, CVTR */
+    var combined=view+click;
+    var cvtr=(imp>0)?(combined/imp):0;
+    h+='<div style="background:rgba(34,197,94,.06);border-radius:8px;padding:12px;border:1px solid rgba(34,197,94,.2);text-align:center"><div style="font-size:9px;color:#4ADE80;text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px">예상 조회+클릭</div><div style="font-size:20px;font-weight:700;color:var(--w)">'+simFmtNum(combined)+'</div><div style="font-size:10px;color:var(--g3)">건</div></div>';
+    h+='<div style="background:var(--bg4);border-radius:8px;padding:12px;border:1px solid var(--bd);text-align:center"><div style="font-size:9px;color:var(--g3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px">예상 CVTR</div><div style="font-size:20px;font-weight:700;color:var(--w)">'+(cvtr*100).toFixed(2)+'</div><div style="font-size:10px;color:var(--g3)">%</div></div>';
+  } else if(prod.noClick){
+    /* CTV: 클릭 카드 없음, VTR 99% */
     h+='<div style="background:rgba(34,197,94,.06);border-radius:8px;padding:12px;border:1px solid rgba(34,197,94,.2);text-align:center"><div style="font-size:9px;color:#4ADE80;text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px">예상 조회수</div><div style="font-size:20px;font-weight:700;color:var(--w)">'+simFmtNum(view)+'</div><div style="font-size:10px;color:var(--g3)">회</div></div>';
+    h+='<div style="background:var(--bg4);border-radius:8px;padding:12px;border:1px solid var(--bd);text-align:center"><div style="font-size:9px;color:var(--g3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px">예상 VTR</div><div style="font-size:20px;font-weight:700;color:var(--w)">'+(vtr*100).toFixed(1)+'</div><div style="font-size:10px;color:var(--g3)">%</div></div>';
+  } else {
+    /* Regular video: 조회수, 클릭, VTR (4 cards total with 노출) */
+    h+='<div style="background:rgba(34,197,94,.06);border-radius:8px;padding:12px;border:1px solid rgba(34,197,94,.2);text-align:center"><div style="font-size:9px;color:#4ADE80;text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px">예상 조회수</div><div style="font-size:20px;font-weight:700;color:var(--w)">'+simFmtNum(view)+'</div><div style="font-size:10px;color:var(--g3)">회</div></div>';
+    h+='<div style="background:rgba(229,57,53,.06);border-radius:8px;padding:12px;border:1px solid rgba(229,57,53,.2);text-align:center"><div style="font-size:9px;color:var(--r);text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px">예상 클릭</div><div style="font-size:20px;font-weight:700;color:var(--w)">'+simFmtNum(click)+'</div><div style="font-size:10px;color:var(--g3)">건</div></div>';
     h+='<div style="background:var(--bg4);border-radius:8px;padding:12px;border:1px solid var(--bd);text-align:center"><div style="font-size:9px;color:var(--g3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px">예상 VTR</div><div style="font-size:20px;font-weight:700;color:var(--w)">'+(vtr*100).toFixed(1)+'</div><div style="font-size:10px;color:var(--g3)">%</div></div>';
   }
   h+='</div>';
   if(isVideo&&view>0){
-    var effCpv=Math.round(budget/view);
     h+='<div style="display:flex;gap:8px;margin-top:8px">';
-    h+='<div style="flex:1;background:var(--bg4);border-radius:8px;padding:10px 12px;border:1px solid var(--bd)"><div style="font-size:9px;color:var(--g3);letter-spacing:.06em;text-transform:uppercase;margin-bottom:3px">실효 CPV</div><div style="font-size:14px;font-weight:700;color:var(--w)">'+effCpv.toLocaleString()+'원</div></div>';
+    if(prod.cpvc){
+      var _comb2=view+click;
+      var effCpvc=_comb2>0?Math.round(budget/_comb2):0;
+      h+='<div style="flex:1;background:var(--bg4);border-radius:8px;padding:10px 12px;border:1px solid var(--bd)"><div style="font-size:9px;color:var(--g3);letter-spacing:.06em;text-transform:uppercase;margin-bottom:3px">실효 CPVC</div><div style="font-size:14px;font-weight:700;color:var(--w)">'+effCpvc.toLocaleString()+'원</div></div>';
+    } else {
+      var effCpv=Math.round(budget/view);
+      h+='<div style="flex:1;background:var(--bg4);border-radius:8px;padding:10px 12px;border:1px solid var(--bd)"><div style="font-size:9px;color:var(--g3);letter-spacing:.06em;text-transform:uppercase;margin-bottom:3px">실효 CPV</div><div style="font-size:14px;font-weight:700;color:var(--w)">'+effCpv.toLocaleString()+'원</div></div>';
+    }
     h+='<div style="flex:1;background:var(--bg4);border-radius:8px;padding:10px 12px;border:1px solid var(--bd)"><div style="font-size:9px;color:var(--g3);letter-spacing:.06em;text-transform:uppercase;margin-bottom:3px">실효 CPM</div><div style="font-size:14px;font-weight:700;color:var(--w)">'+Math.round(budget/imp*1000).toLocaleString()+'원</div></div>';
     h+='</div>';
   }
@@ -4100,7 +4168,21 @@ function runSimulator(){
   h+='<div class="out-sec"><div class="out-sec-t">Calculation Logic</div>';
   h+='<div style="background:var(--bg4);border-radius:8px;padding:12px;border:1px solid var(--bd)">';
   h+='<pre style="font-family:monospace;font-size:11px;color:var(--g2);line-height:1.75;white-space:pre-wrap;margin:0">'+formulaStr+'</pre>';
-  h+='<div style="margin-top:8px;font-size:10px;color:var(--g3)">기준값: '+(prod.ctrFixed?'상품 고정 CTR ':(ind+' 업종 CTR '))+(ctr*100).toFixed(2)+'%'+(isVideo?' / VTR '+(vtr*100).toFixed(1)+'%':'')+(prod.vtrFixed?' (상품 고정 VTR)':'')+'</div>';
+  var vidCtr3=SIM_VIDEO_CTR[ind]||0.018;
+  var basisStr;
+  if(isVideo){
+    if(prod.cpvc){
+      var _cvtr2=vtr+vidCtr3;
+      basisStr=ind+' 업종 비디오 CTR '+(vidCtr3*100).toFixed(2)+'% + VTR '+(vtr*100).toFixed(1)+'% = CVTR '+(_cvtr2*100).toFixed(2)+'%';
+    } else if(prod.noClick){
+      basisStr='상품 고정 VTR '+(vtr*100).toFixed(1)+'% (CTV · 클릭 없음)';
+    } else {
+      basisStr=ind+' 업종 비디오 CTR '+(vidCtr3*100).toFixed(2)+'% / VTR '+(vtr*100).toFixed(1)+'%'+(prod.vtrTable==='bumper'?' (범퍼 업종별 VTR)':'');
+    }
+  } else {
+    basisStr=(prod.ctrFixed?'상품 고정 CTR ':(ind+' 업종 CTR '))+(ctr*100).toFixed(2)+'%';
+  }
+  h+='<div style="margin-top:8px;font-size:10px;color:var(--g3)">기준값: '+basisStr+'</div>';
   h+='</div></div>';
 
   /* Recommendation */
