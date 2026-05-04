@@ -3804,7 +3804,7 @@ var SIM_PRODUCTS = {
      rates:[{max:9999999,v:100},{max:29999999,v:100},{max:49999999,v:97},{max:Infinity,v:95}],
      kpi:['Branding','UV확보']},
     {id:'reach-max',name:'Reach Max',              hint:'최대 UV 도달 · 전 구간 40원 고정',
-     rates:[{max:Infinity,v:40}], kpi:['UV확보','Branding']},
+     rates:[{max:Infinity,v:40}], ctrFixed:0.0076, kpi:['UV확보','Branding']},
     {id:'smart-tr', name:'Smart tracking',         hint:'전환 최적화 · 전 구간 150원',
      rates:[{max:Infinity,v:150}], kpi:['CPI','CPA','ROAS']},
     {id:'live-com', name:'Live commerce',          hint:'라이브 방송 카운트다운 배너 연동',
@@ -3821,25 +3821,25 @@ var SIM_PRODUCTS = {
   ],
   cpm: [
     {id:'mens-net', name:"Men's Network",          hint:'남성 특화 프리미엄 인벤토리 · 150원',
-     rates:[{max:Infinity,v:150}], kpi:['Branding','UV확보']},
+     rates:[{max:Infinity,v:150}], ctrFixed:0.0003, kpi:['Branding','UV확보']},
     {id:'kpf-pc',   name:'KPF PC DA',              hint:'카카오 파트너 PC 피드 · 385원',
-     rates:[{max:Infinity,v:385}], kpi:['Branding','UV확보']},
+     rates:[{max:Infinity,v:385}], ctrFixed:0.0021, kpi:['Branding','UV확보']},
     {id:'pc-ban',   name:'PC 배너',                hint:'PC 전용 배너 지면',
-     rates:[{max:9999999,v:500},{max:29999999,v:500},{max:49999999,v:475},{max:Infinity,v:450}],
+     rates:[{max:9999999,v:500},{max:29999999,v:500},{max:49999999,v:475},{max:Infinity,v:450}], ctrFixed:0.008,
      kpi:['Branding','UV확보']},
     {id:'kakao',    name:'Kakao × nap dsp',        hint:'국내 DSP 최초 다음/카카오톡 비즈보드',
-     rates:[{max:9999999,v:1500},{max:29999999,v:1500},{max:49999999,v:1350},{max:Infinity,v:1200}],
+     rates:[{max:9999999,v:1500},{max:29999999,v:1500},{max:49999999,v:1350},{max:Infinity,v:1200}], ctrFixed:0.0003,
      kpi:['Branding','UV확보']},
     {id:'kpf-wl',   name:'KPF White listing',      hint:'카카오 화이트리스팅 · 2,000원',
-     rates:[{max:Infinity,v:2000}], kpi:['Branding']},
+     rates:[{max:Infinity,v:2000}], ctrFixed:0.035, kpi:['Branding']},
     {id:'bl-cpm',   name:'Brand lift (CPM)',        hint:'브랜드 리프트 측정 지면 CPM',
-     rates:[{max:9999999,v:3800},{max:29999999,v:3800},{max:49999999,v:3600},{max:Infinity,v:3200}],
+     rates:[{max:9999999,v:3800},{max:29999999,v:3800},{max:49999999,v:3600},{max:Infinity,v:3200}], ctrFixed:0.037,
      kpi:['Branding']},
     {id:'womens',   name:"Women's Network",        hint:'여성 특화 3049 프리미엄 인벤토리',
-     rates:[{max:9999999,v:3800},{max:29999999,v:3800},{max:49999999,v:3600},{max:Infinity,v:3200}],
+     rates:[{max:9999999,v:3800},{max:29999999,v:3800},{max:49999999,v:3600},{max:Infinity,v:3200}], ctrFixed:0.01,
      kpi:['Branding','UV확보']},
     {id:'catch-t',  name:'Catch Table × nap dsp',  hint:'캐치테이블 스페셜 인벤토리 · 4,400원',
-     rates:[{max:Infinity,v:4400}], kpi:['Branding']}
+     rates:[{max:Infinity,v:4400}], ctrFixed:0.0004, kpi:['Branding']}
   ],
   video_cpv: [
     {id:'bl-va',    name:'Brand lift VA (CPVC)',    hint:'브랜드 리프트 영상 어텐션 · 20원',
@@ -4001,7 +4001,7 @@ function runSimulator(){
 
   var type=found.type, prod=found.prod;
   var rate=simGetRate(prod.rates,budget);
-  var ctr=SIM_CTR[ind]||0.038;
+  var ctr=prod.ctrFixed||(SIM_CTR[ind]||0.038);
   var vtr=prod.vtrFixed||(SIM_VTR[ind]||0.80);
 
   var imp=0,click=0,view=0;
@@ -4040,7 +4040,7 @@ function runSimulator(){
   /* 해석 문구 */
   var isVideo=(type==='video_cpv'||type==='video_cpm');
   var interp=[];
-  var mainMetric=isVideo?('예상 조회수 약 '+simFmtNum(view)+'회 (VTR '+(vtr*100).toFixed(1)+'% 기준)'):('예상 클릭 약 '+simFmtNum(click)+'건, 노출 약 '+simFmtNum(imp)+'회 ('+ind+' 업종 평균 CTR '+(ctr*100).toFixed(2)+'% 기준)');
+  var mainMetric=isVideo?('예상 조회수 약 '+simFmtNum(view)+'회 (VTR '+(vtr*100).toFixed(1)+'% 기준)'):('예상 클릭 약 '+simFmtNum(click)+'건, 노출 약 '+simFmtNum(imp)+'회 ('+(prod.ctrFixed?'상품 고정 CTR ':(ind+' 업종 평균 CTR '))+(ctr*100).toFixed(2)+'% 기준)');
   interp.push(mainMetric);
   if(budget>=50000000) interp.push('예산이 5천만원 이상이므로 최저 할인 단가('+rate.toLocaleString()+'원)가 적용되었습니다.');
   else if(budget>=30000000) interp.push('예산이 3천만원 이상이므로 할인 단가('+rate.toLocaleString()+'원)가 적용되었습니다.');
@@ -4100,7 +4100,7 @@ function runSimulator(){
   h+='<div class="out-sec"><div class="out-sec-t">Calculation Logic</div>';
   h+='<div style="background:var(--bg4);border-radius:8px;padding:12px;border:1px solid var(--bd)">';
   h+='<pre style="font-family:monospace;font-size:11px;color:var(--g2);line-height:1.75;white-space:pre-wrap;margin:0">'+formulaStr+'</pre>';
-  h+='<div style="margin-top:8px;font-size:10px;color:var(--g3)">기준값: '+ind+' 업종 CTR '+(ctr*100).toFixed(2)+'%'+(isVideo?' / VTR '+(vtr*100).toFixed(1)+'%':'')+(prod.vtrFixed?' (상품 고정 VTR)':'')+'</div>';
+  h+='<div style="margin-top:8px;font-size:10px;color:var(--g3)">기준값: '+(prod.ctrFixed?'상품 고정 CTR ':(ind+' 업종 CTR '))+(ctr*100).toFixed(2)+'%'+(isVideo?' / VTR '+(vtr*100).toFixed(1)+'%':'')+(prod.vtrFixed?' (상품 고정 VTR)':'')+'</div>';
   h+='</div></div>';
 
   /* Recommendation */
